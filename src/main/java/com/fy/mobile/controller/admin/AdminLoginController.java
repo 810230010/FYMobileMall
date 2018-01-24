@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 管理员登录模块controller
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/admin")
 public class AdminLoginController {
 
-    @RequestMapping(value = {"page/login", ""})
+    @RequestMapping(value = {"/login"})
     public String viewToLogin(){
         return "login";
     }
