@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fy.mobile.mapper.user.UserLoginMapper">
+    <!--添加用户-->
+    <insert id="insertUser">
+        INSERT INTO fy_user(nickname, tel, password, create_time)
+        VALUES (#{nickname}, #{tel}, #{password}, #{createTime});
+    </insert>
+    <!--普通用户验证登录-->
+    <select id="getUserByUsernameAndPassword" resultType="com.fy.mobile.entity.user.UserLoginDTO">
+        select
+        nickname,tel,password
+        from fy_user
+        where tel = #{tel} and password = #{password} and user_type = 0 limit 1;
+    </select>
+    <!--检验手机号是否存在-->
+    <select id="getTelAndCheck" resultType="java.lang.String">
+        select tel from fy_user where tel = #{tel};
+    </select>
+    <!--检查昵称是否存在-->
+    <select id="getNicknameAndCheck" resultType="java.lang.String">
+        select nickname from fy_user where nickname = #{nickname};
+    </select>
+</mapper>

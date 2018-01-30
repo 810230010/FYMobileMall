@@ -2,14 +2,15 @@
 <head>
     <title>首页</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="css/bootstrap/bootstrap.css" rel="stylesheet"/>
-    <link href="css/animate/animate.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/bootstrap/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/buttons/buttons.css"/>
+    <link href="${springMacroRequestContext.contextPath}/css/bootstrap/bootstrap.css" rel="stylesheet"/>
+    <link href="${springMacroRequestContext.contextPath}/css/animate/animate.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/bootstrap/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/buttons/buttons.css"/>
     <!-- <link rel="stylesheet" href="css/semantic/semantic.css"> -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap/bootstrap.js"></script>
-    <script src="js/bootstrap/bootstrap-dropdown-on-hover.js"></script>
+    <script src="${springMacroRequestContext.contextPath}/js/jquery.min.js"></script>
+    <script src="${springMacroRequestContext.contextPath}/js/bootstrap/bootstrap.js"></script>
+    <script src="${springMacroRequestContext.contextPath}/js/bootstrap/bootstrap-dropdown-on-hover.js"></script>
+    <script src="${springMacroRequestContext.contextPath}/js/layer/layer.js"></script>
     <!-- <script type="text/javascript" src="js/semantic/semantic.js"></script> -->
 </head>
 <style type="text/css">
@@ -34,6 +35,7 @@
     ul#navigation {
         list-style: none;
         width: 500px;
+        padding-left: 0px;
     }
     li.item{
         float: left;
@@ -42,16 +44,21 @@
         text-align: center;
         cursor: pointer;
         margin-left: 4px;
+        border-radius: 10px;
     }
     li.item a{
         text-decoration: none;
         color: silver;
     }
     li.item a:hover{
-        color: white;
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
     }
     li.item.active{
-        border-bottom: 1px solid white;
+        /*border-bottom: 1px solid white;*/
+        background-color: silver;
+        color: black;
     }
     a #menu-tital:hover{
         background-color: black;
@@ -148,6 +155,9 @@
     .empty-cart{
 
     }
+    ul li.item{
+        transition: all 0.8s;
+    }
 </style>
 <body>
 <!--菜单-->
@@ -157,7 +167,7 @@
     </div>
     <div class="col-md-4 pull-left" id="navigation-wrapper" style="height:40px;line-height: 40px">
         <ul id="navigation">
-            <li class="item active" activeFlag="true"><a href="#">首页</a></li>
+            <li class="item" activeFlag="true"><a href="#">首页</a></li>
             <li class="item" activeFlag="false"><a href="#">所有发布</a></li>
             <li class="item" activeFlag="false"><a href="#">发布闲置</a></li>
             <li class="item" activeFlag="false"><a href="#">发布需求</a></li>
@@ -165,14 +175,13 @@
     </div>
     <div id="operation" style="position: absolute; right:80px">
         <div class="search-wrapper row" style="position:relative;top:4px">
-            <!-- <input id="search-box" type="text" placeholder="请搜索.." style="border-radius: 5px;height:30px;width:200px;outline: none;"> -->
             <input type="text" class="form-control" placeholder="请搜索">
         </div>
-        <div id="logined" style="display: inline;display: none;">
+        <div id="logined" style="float: left;display: none;">
             <ul id="menu2" class="nav navbar-nav">
                 <li class="dropdown" style="background-color: black">
                     <a id="menu-title" style="color: silver;" href="#" data-toggle="dropdown">
-                        欢迎您， Bonjour!<b class="caret"></b></a>
+                        欢迎您， <span id="nick">Bonjour!</span><b class="caret"></b></a>
                     <ul class="dropdown-menu animated" data-animation="fadeInDown">
                         <li><a href="#">我的信息</a></li>
                         <li><a href="#">我的订单</a></li>
@@ -182,10 +191,10 @@
                 </li>
             </ul>
         </div>
-        <div id="person-info" style="display: inline;">
+        <div id="person-info" style="float: left;">
             <button id="login" type="button" class="btn btn-default login" data-toggle="modal" data-target="#myModal">登录</button>
         </div>
-        <div id="collect" style="display: inline;display: none;">
+        <div id="collect" style="float: left;display: none;">
             <ul id="menu" class="nav navbar-nav">
                 <li class="dropdown" style="background-color: black">
                     <a id="menu-title" style="color: silver;" href="#" data-toggle="dropdown">
@@ -198,9 +207,9 @@
                 </li>
             </ul>
         </div>
-        <div id="cart" style="display: inline;">
+        <div id="cart" style="float: left;">
             <a href="#" style="height: 40px">
-                <img id="cart-image" src="img/cart.png" style="width: 40px; height: 40px" alt="">
+                <img id="cart-image" src="${springMacroRequestContext.contextPath}/img/cart.png" style="width: 40px; height: 40px" alt="">
             </a>
         </div>
 
@@ -208,13 +217,13 @@
     <!--购物车窗口-->
     <div class="cart-window">
         <h3 style="color: black;padding-left: 10px; padding-right: 20px" class="text-left">我的购物车
-            <a href="#" class="pull-right" style="font-size: 14px;color: black;position: relative;"><img src="img/sweep.png" style="width: 30px; height:30px;" alt="">一键清除</a>
+            <a href="#" class="pull-right" style="font-size: 14px;color: black;position: relative;"><img src="${springMacroRequestContext.contextPath}/img/sweep.png" style="width: 30px; height:30px;" alt="">一键清除</a>
         </h3>
         <div class="divider-solid"></div>
         <!-- 购物车商品列表 -->
         <div class="cart-content" style="height: 440px">
             <div class="empty-content" style="padding-top: 100px">
-                <img src="img/empty.png" alt="">
+                <img src="${springMacroRequestContext.contextPath}/img/empty.png" alt="">
             </div>
         </div>
         <div class="divider-solid"></div>
@@ -239,7 +248,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-user"></span></span>
-                                <input type="text" class="form-control" id="password" name="password" placeholder="请输入手机号">
+                                <input type="text" class="form-control" id="tel" name="tel" placeholder="请输入手机号">
                             </div>
                         </div>
                         <div class="form-group">
@@ -255,7 +264,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">登录</button>
+                    <button id="submit" type="button" class="btn btn-primary">登录</button>
                 </div>
             </div>
         </div>
@@ -274,27 +283,33 @@
                     <form>
                         <div class="form-group">
                             <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-phone"></span></span>
+                                <input type="text" class="form-control" id="reg-tel" name="password" placeholder="请输入手机号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-user"></span></span>
-                                <input type="text" class="form-control" id="password" name="password" placeholder="请输入手机号">
+                                <input type="text" class="form-control" id="reg-nickname" name="password" placeholder="请输入用户名">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+                                <input type="password" class="form-control" id="reg-password" name="password" placeholder="请输入密码">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><span class="fa fa-lock"></span></span>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="请确认密码">
+                                <input type="password" class="form-control" id="conf-password" name="password" placeholder="请确认密码">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">注册</button>
+                    <button id="reg-btn" type="button" class="btn btn-primary">注册</button>
                 </div>
             </div>
         </div>
@@ -312,13 +327,13 @@
         <!-- 轮播（Carousel）项目 -->
         <div class="carousel-inner">
             <div class="item active">
-                <img src="img/carousel_img1.jpg" alt="First slide">
+                <img src="${springMacroRequestContext.contextPath}/img/carousel_img1.jpg" alt="First slide">
             </div>
             <div class="item">
-                <img src="img/carousel_img1.jpg" alt="Second slide">
+                <img src="${springMacroRequestContext.contextPath}/img/carousel_img1.jpg" alt="Second slide">
             </div>
             <div class="item">
-                <img src="img/carousel_img1.jpg" alt="Third slide">
+                <img src="${springMacroRequestContext.contextPath}/img/carousel_img1.jpg" alt="Third slide">
             </div>
         </div>
         <!-- 轮播（Carousel）导航 -->
@@ -338,7 +353,7 @@
             <div class="row">
                 <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
-                        <img src="img/feature1.jpg" style="width: 100%;" alt="通用的占位符缩略图">
+                        <img src="${springMacroRequestContext.contextPath}/img/feature1.jpg" style="width: 100%;" alt="通用的占位符缩略图">
                         <div class="caption text-center">
                             <h3>卖家实名认证</h3>
                         </div>
@@ -346,7 +361,7 @@
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
-                        <img src="img/feature2.jpg"
+                        <img src="${springMacroRequestContext.contextPath}/img/feature2.jpg"
                              alt="通用的占位符缩略图" style="width: 100%;">
                         <div class="caption text-center">
                             <h3>支付宝担保交易</h3>
@@ -355,7 +370,7 @@
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
-                        <img src="img/feature3.jpg"
+                        <img src="${springMacroRequestContext.contextPath}/img/feature3.jpg"
                              alt="通用的占位符缩略图" style="width: 100%;">
                         <div class="caption text-center">
                             <h3>专业团队支撑</h3>
@@ -364,7 +379,7 @@
                 </div>
                 <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
-                        <img src="img/feature4.jpg"
+                        <img src="${springMacroRequestContext.contextPath}/img/feature4.jpg"
                              alt="通用的占位符缩略图" style="width: 100%;">
                         <div class="caption text-center">
                             <h3>官方微博</h3>
@@ -393,13 +408,13 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="thumbnail">
-                        <img src="img/MI.jpg" style="height: 300px;" alt="通用的占位符缩略图">
+                        <img src="${springMacroRequestContext.contextPath}/img/MI.jpg" style="height: 300px;" alt="通用的占位符缩略图">
                     </div>
                 </div>
                 <div class="newest-goods col-md-9">
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -409,7 +424,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -419,7 +434,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -429,7 +444,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -439,7 +454,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -449,7 +464,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -479,7 +494,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="thumbnail">
-                        <img src="img/MI.jpg" style="height: 300px;" alt="通用的占位符缩略图">
+                        <img src="${springMacroRequestContext.contextPath}/img/MI.jpg" style="height: 300px;" alt="通用的占位符缩略图">
                     </div>
                 </div>
                 <div class="newest-goods col-md-9">
@@ -495,7 +510,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -505,7 +520,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -515,7 +530,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -525,7 +540,7 @@
                     </div>
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -536,7 +551,7 @@
 
                     <div class="goods-item col-md-3">
                         <div class="thumbnail">
-                            <img src="img/goods.jpg"
+                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
                                  alt="通用的占位符缩略图" style="width: 75%;height: 140px">
                             <div class="caption text-center" style="position:relative">
                                 <span>iPhone 6 苹果6 64G 8.3</span>
@@ -600,25 +615,15 @@
             }
         }).mouseleave(function(event) {
             $("li.item").each(function(index, el) {
-                if($(this).attr('activeFlag') == "false"){
-                    $(this).removeClass('active');
-                }
+                $(this).removeClass('active');
+
             });
-        }).click(function(event) {
-            var click_index = $(this).index("li.item");
-            var length = $("li.item").length;
-            for(var i=0; i<length; i++){
-                if(i != click_index){
-                    $("li.item").eq(i).removeClass('active');
-                    $("li.item").eq(i).attr('activeFlag', 'false');
-                }else
-                    $("li.item").eq(i).attr('activeFlag', 'true');
-            }
         });
         //下拉菜单动画
         $("#menu").bootstrapDropdownOnHover({ mouseOutDelay: 50 });
         $("#menu2").bootstrapDropdownOnHover({ mouseOutDelay: 50 });
-
+        //查询是否登录
+        user.getLoginInfo();
     })
     $("#register_href").click(function(event) {
         $("#myModal").modal('hide');
@@ -638,6 +643,7 @@
             // $("body").removeClass('blur');
         }
     });
+    var user = new User();
     $(".back-to-top a").on('click', function(){
         $("html body").animate({scrollTop: 0}, 800);
     })
@@ -649,11 +655,103 @@
         }
     })
     $(window).trigger('scroll');
+
+    $("#submit").on('click', function () {
+        user.login();
+    });
+    $("#reg-btn").click(function () {
+        user.register();
+    })
     function Mycart(){
         this.show = function(){
             $(".cart-window").show();
         }
     }
+    function User() {
+        //登录
+        this.login = function () {
+            var tel = $("#tel").val();
+            var password = $("#password").val();
+            //发送登录请求
+            $.ajax({
+                url: "${springMacroRequestContext.contextPath}/user/login/check",
+                data: {
+                    tel: tel,
+                    password: password
+                },
+                success: function (result) {
+                    if(result.code == 0){
+                        alert("登录成功");
+                        $("#logined").css('display', 'block');
+                        $("#person-info").css('display', 'none');
+                        $("#nick").html(result.data.nickname);
+                        $('#myModal').modal('hide');
+                    }else{
+                        alert(result.msg)
+                    }
+                },
+                error: function(result){
+                    alert("登录服务出错!");
+                }
+            })
 
+        }
+        //注册
+        this.register = function () {
+            var tel = $("#reg-tel").val();
+            var nickname = $("#reg-nickname").val();
+            var password = $("#reg-password").val();
+            var confirmPass = $("#conf-password").val();
+            if(confirmPass != password){
+                alert("请保持两次密码一致!");
+                return;
+            }
+            $.ajax({
+                url: "${springMacroRequestContext.contextPath}/user/add",
+                type: "POST",
+                data: {
+                    tel: tel,
+                    nickname: nickname,
+                    password: password
+                },
+                success: function (result) {
+                    if(result.code == 700){
+                        alert("该手机号已注册!");
+                    }else if(result.code == 701){
+                        alert("该昵称已存在！")
+                    }else{
+                        alert("恭喜，注册成功,现在可以登陆!");
+                        setTimeout(function () {
+                            window.location.reload()
+                        }, 2000);
+                    }
+                },
+                error: function (result) {
+                    alert("注册服务出错!");
+                }
+            })
+        }
+
+        this.getLoginInfo = function(){
+            $.ajax({
+                url: "${springMacroRequestContext.contextPath}/user/loginInfo",
+                type: "GET",
+                success: function (result) {
+                    alert(JSON.stringify(result))
+                    if(result['data'] == null){
+                        $("#logined").css('display', 'none');
+                        $("#person-info").css('display', 'block');
+                    }else{
+                        $("#logined").css('display', 'block');
+                        $("#person-info").css('display', 'none');
+                        $("#nick").html(result.data.nickname);
+                    }
+                },
+                error: function (result) {
+                    alert("获取登录信息出错!")
+                }
+            })
+        }
+    }
 </script>
 </html>

@@ -1,5 +1,6 @@
 package com.fy.mobile;
 
+import com.fy.mobile.util.DigestUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,7 @@ public class MobileApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }
