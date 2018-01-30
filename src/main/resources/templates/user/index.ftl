@@ -633,7 +633,7 @@
     $(document).click(function(e){
         e = window.event || e;
         var obj = e.srcElement || e.target;
-        if($(obj).is("#cart-image, .cart-window")) {
+        if($(obj).is("#cart-image, .cart-window *")) {
             $(".cart-window").animate({right: "0"}, 500);
             $(".car-maskmagix_vf_car").show();
             // $("body").addClass('blur')
