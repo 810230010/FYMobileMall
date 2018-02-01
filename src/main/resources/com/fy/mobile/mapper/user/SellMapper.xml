@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fy.mobile.mapper.user.SellMapper">
+    <!--添加需求-->
+    <insert id="insertSellPublish">
+        insert into fy_sell_publish(publisher_id, publisher_name, sell_title, sell_description,publish_time, image, sell_price, brand_name)
+        values (#{publisherId}, #{publisherName}, #{sellTitle}, #{sellDescription}, #{publishTime}, #{image}, #{sellPrice}, #{brandName});
+    </insert>
+
+</mapper>

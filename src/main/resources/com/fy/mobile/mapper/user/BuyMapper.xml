@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fy.mobile.mapper.user.BuyMapper">
+    <!--添加需求-->
+    <insert id="insertBuyNeed">
+        insert into fy_need_publish(publisher_id, publisher_name, need_title, need_description,publish_time)
+        values (#{userId}, #{nickname}, #{title}, #{description}, #{publishTime});
+    </insert>
+    <select id="listIndexBuyNeeds" resultType="com.fy.mobile.entity.user.IndexBuyNeedDTO">
+        select need_id needId,
+        publisher_name publisherName,
+        publisher_id publisherId,
+        need_title title,
+        comment_no commentNo,
+        publish_time publishTime
+        from fy_need_publish
+        ORDER BY publish_time
+        limit 8;
+    </select>
+</mapper>

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**普通用户登陆模块
  * Created by usher on 2018/1/24.
  */
@@ -25,6 +28,8 @@ public class UserLoginController {
     private UserLoginService userLoginService;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private HttpServletResponse response;
 
     /**
      * 用户登录验证
@@ -55,6 +60,10 @@ public class UserLoginController {
         return result;
     }
 
+    /**
+     * 获取登录信息
+     * @return
+     */
     @RequestMapping("/loginInfo")
     @ResponseBody
     public RestResult getUserLoginInfo(){
@@ -62,5 +71,11 @@ public class UserLoginController {
         if(loginDTO == null)
             return new RestResult().ok();
         return new RestResult().ok(loginDTO.getNickname());
+    }
+
+    @RequestMapping("/logout")
+    public String logout(){
+        WebUtil.logout(request);
+        return "redirect:/page/index";
     }
 }
