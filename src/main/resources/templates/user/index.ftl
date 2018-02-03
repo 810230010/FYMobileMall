@@ -161,9 +161,6 @@
         width: 100%;
     }
 
-    .empty-cart{
-
-    }
     ul li.item{
         transition: all 0.8s;
     }
@@ -188,9 +185,10 @@
             <li class="item"><a href="#" data-toggle="modal" data-target="#myNeedModal">发布需求</a></li>
         </ul>
     </div>
-    <div id="operation" style="position: absolute; right:80px">
+    <div id="operation" style="position: absolute; right:80px;">
         <div class="search-wrapper row" style="position:relative;top:4px">
-            <input type="text" class="form-control" placeholder="请搜索">
+            <button onclick="window.location.href='/page/search'" class="btn btn-primary" style="position: absolute; right:0px;bottom: 0">搜索</button>
+            <input id="search" type="text" class="form-control" placeholder="请搜索">
         </div>
         <#if currentUser?exists>
         <div id="logined" style="float: left">
@@ -377,6 +375,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="brand_name" class="control-label col-md-2">品牌</label>
+                            <div class="col-md-10">
+                                <input id="brand_name" type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="sell-price" class="control-label col-md-2">出价</label>
                             <div class="col-md-10">
                                 <input id="sell-price" type="text" class="form-control"/>
@@ -521,66 +525,20 @@
                     </div>
                 </div>
                 <div class="newest-goods col-md-9">
-                    <div class="goods-item col-md-3">
-                        <div class="thumbnail">
-                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
-                                 alt="通用的占位符缩略图" style="width: 75%;height: 140px">
-                            <div class="caption text-center" style="position:relative">
-                                <span>iPhone 6 苹果6 64G 8.3</span>
-                                <span style="position: absolute; right:20px;bottom:0;color: red">$22</span>
+                    <#list sellItems as sellItem>
+                        <a href="/sell/item/detail">
+                            <div class="goods-item col-md-3">
+                                <div class="thumbnail" style="padding-left: 0; padding-right: 0">
+                                    <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
+                                         alt="通用的占位符缩略图" style="width: 75%;height: 140px">
+                                    <div class="caption text-center" style="position:relative;height:60px">
+                                        <span>${sellItem.sellTitle}</span>
+                                        <span style="position: absolute; right:20px;bottom:0;color: red">¥${sellItem.sellPrice}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="goods-item col-md-3">
-                        <div class="thumbnail">
-                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
-                                 alt="通用的占位符缩略图" style="width: 75%;height: 140px">
-                            <div class="caption text-center" style="position:relative">
-                                <span>iPhone 6 苹果6 64G 8.3</span>
-                                <span style="position: absolute; right:20px;bottom:0;color: red">$22</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="goods-item col-md-3">
-                        <div class="thumbnail">
-                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
-                                 alt="通用的占位符缩略图" style="width: 75%;height: 140px">
-                            <div class="caption text-center" style="position:relative">
-                                <span>iPhone 6 苹果6 64G 8.3</span>
-                                <span style="position: absolute; right:20px;bottom:0;color: red">$22</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="goods-item col-md-3">
-                        <div class="thumbnail">
-                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
-                                 alt="通用的占位符缩略图" style="width: 75%;height: 140px">
-                            <div class="caption text-center" style="position:relative">
-                                <span>iPhone 6 苹果6 64G 8.3</span>
-                                <span style="position: absolute; right:20px;bottom:0;color: red">$22</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="goods-item col-md-3">
-                        <div class="thumbnail">
-                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
-                                 alt="通用的占位符缩略图" style="width: 75%;height: 140px">
-                            <div class="caption text-center" style="position:relative">
-                                <span>iPhone 6 苹果6 64G 8.3</span>
-                                <span style="position: absolute; right:20px;bottom:0;color: red">$22</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="goods-item col-md-3">
-                        <div class="thumbnail">
-                            <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
-                                 alt="通用的占位符缩略图" style="width: 75%;height: 140px">
-                            <div class="caption text-center" style="position:relative">
-                                <span>iPhone 6 苹果6 64G 8.3</span>
-                                <span style="position: absolute; right:20px;bottom:0;color: red">$22</span>
-                            </div>
-                        </div>
-                    </div>
+                        </a>
+                    </#list>
                 </div>
             </div>
         </div>
@@ -826,12 +784,14 @@
     $("#reg-btn").click(function () {
         user.register();
     });
+    $("#search").cl
     //发布闲置
     $("#publish_sell").click(function () {
         var sell_title = $("#sell-title").val();
         var images = img_arr.join(",");
         var sell_description = $("#sell-description").val();
         var sell_price = $("#sell-price").val();
+        var brand_name = $("#brand_name").val();
         $.ajax({
             url: "${springMacroRequestContext.contextPath}/sell/item/publish",
             type: "POST",
@@ -839,7 +799,8 @@
                sellTitle: sell_title,
                image: images,
                sellDescription: sell_description,
-               sellPrice: sell_price
+               sellPrice: sell_price,
+               brandName: brand_name
             },
             success: function (result) {
                 if(result.code == 0){

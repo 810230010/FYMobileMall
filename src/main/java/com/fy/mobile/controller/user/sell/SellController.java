@@ -24,7 +24,7 @@ public class SellController {
     @ResponseBody
     public RestResult publishSellItem(SellPublishDTO sellPublishDTO){
         RestResult result = new RestResult();
-        sellService.adDSellPublish(sellPublishDTO);
+        sellService.addSellPublish(sellPublishDTO);
         return result.ok();
     }
 }

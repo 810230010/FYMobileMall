@@ -2,6 +2,7 @@ package com.fy.mobile.controller.user;
 
 import com.fy.mobile.entity.user.UserLoginDTO;
 import com.fy.mobile.service.user.buy.BuyService;
+import com.fy.mobile.service.user.sell.SellService;
 import com.fy.mobile.util.QiniuUtil;
 import com.fy.mobile.util.WebUtil;
 import org.apache.catalina.core.ApplicationContext;
@@ -21,6 +22,8 @@ public class IndexController {
     private HttpServletRequest request;
     @Autowired
     private BuyService buyService;
+    @Autowired
+    private SellService sellService;
     /**
      * 首页
      * @return
@@ -28,10 +31,19 @@ public class IndexController {
     @RequestMapping(value = {"", "page/index"})
     public String viewToIndex(Model model){
         Map<String, String> tokenMap = QiniuUtil.getQiniuTokenInfo();
-        model.addAttribute("tokenInfo", tokenMap);
         UserLoginDTO loginDTO = WebUtil.findUserInSession(request);
         model.addAttribute("currentUser", loginDTO);
         model.addAttribute("buyNeeds", buyService.listTop8BuyNeeds());
-        return "/user/index";
+        model.addAttribute("sellItems", sellService.listTop8SellItem());
+        return "/user/index2";
+    }
+
+    /**
+     * 搜索结果页面
+     * @return
+     */
+    @RequestMapping("page/search")
+    public String viewToSearch(){
+        return "/user/search";
     }
 }

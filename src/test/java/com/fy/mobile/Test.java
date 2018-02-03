@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class Test {
     public static void main(String[] args) {
-        DateUtil.createDateWithFormat(Date.class, String.class, new Date(), "yyyy-MM-dd");
+        double a = 0.0;
+        System.out.println((int)a == 0);
     }
 }
