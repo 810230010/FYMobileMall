@@ -27,4 +27,13 @@ public class SellController {
         sellService.addSellPublish(sellPublishDTO);
         return result.ok();
     }
+
+    /**
+     * 闲置发布详情
+     * @return
+     */
+    @RequestMapping("/page/publish/detail")
+    public String viewToSellDetail(){
+        return "/user/sell/sell_detail.ftl";
+    }
 }

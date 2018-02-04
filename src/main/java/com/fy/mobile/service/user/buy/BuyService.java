@@ -2,6 +2,7 @@ package com.fy.mobile.service.user.buy;
 
 import com.fy.mobile.common.GlobalConstant;
 import com.fy.mobile.entity.user.BuyNeedDTO;
+import com.fy.mobile.entity.user.BuyNeedDetail;
 import com.fy.mobile.entity.user.IndexBuyNeedDTO;
 import com.fy.mobile.entity.user.UserLoginDTO;
 import com.fy.mobile.mapper.user.BuyMapper;
@@ -36,5 +37,9 @@ public class BuyService {
     public List<IndexBuyNeedDTO> listTop8BuyNeeds() {
         List<IndexBuyNeedDTO> indexBuyNeedDTOS = buyMapper.listIndexBuyNeeds();
         return indexBuyNeedDTOS;
+    }
+
+    public BuyNeedDetail getBuyNeedDetail(Integer needId) {
+        return null;
     }
 }

@@ -2,10 +2,13 @@ package com.fy.mobile.controller.user.buy;
 
 import com.fy.mobile.entity.common.RestResult;
 import com.fy.mobile.entity.user.BuyNeedDTO;
+import com.fy.mobile.entity.user.BuyNeedDetail;
 import com.fy.mobile.entity.user.IndexBuyNeedDTO;
 import com.fy.mobile.service.user.buy.BuyService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,4 +32,23 @@ public class BuyController {
         return result.ok();
     }
 
+    /**
+     * 获取发布的需求详情
+     * @param needId
+     * @return
+     */
+    public RestResult getPublishedNeedDetail(@Param("needId") Integer needId, Model model){
+        RestResult result = new RestResult();
+        BuyNeedDetail needDetail = buyService.getBuyNeedDetail(needId);
+        return result.ok();
+    }
+
+    /**
+     * 需求详情页面
+     * @return
+     */
+    @RequestMapping("/page/need/detail")
+    public String viewToBuyNeedDetail(){
+        return "/user/buy/need_detail";
+    }
 }

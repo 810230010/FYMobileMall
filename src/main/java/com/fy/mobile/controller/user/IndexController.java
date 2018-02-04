@@ -1,17 +1,21 @@
 package com.fy.mobile.controller.user;
 
+import com.fy.mobile.entity.SearchResult;
 import com.fy.mobile.entity.user.UserLoginDTO;
+import com.fy.mobile.service.user.SearchService;
 import com.fy.mobile.service.user.buy.BuyService;
 import com.fy.mobile.service.user.sell.SellService;
 import com.fy.mobile.util.QiniuUtil;
 import com.fy.mobile.util.WebUtil;
 import org.apache.catalina.core.ApplicationContext;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -24,6 +28,8 @@ public class IndexController {
     private BuyService buyService;
     @Autowired
     private SellService sellService;
+    @Autowired
+    private SearchService searchService;
     /**
      * 首页
      * @return
@@ -43,7 +49,9 @@ public class IndexController {
      * @return
      */
     @RequestMapping("page/search")
-    public String viewToSearch(){
+    public String viewToSearch(@Param("searchWord") String searchWord, Model model){
+        List<SearchResult> searchResultList = searchService.getSearchResult(searchWord);
+        model.addAttribute("searchResult", searchResultList);
         return "/user/search";
     }
 }

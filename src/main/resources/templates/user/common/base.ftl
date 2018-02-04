@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/buttons/buttons.css"/>
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/wang-editor/wangEditor.min.css">
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/webuploader/webuploader.css">
+    <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/page/page.css">
     <!-- <link rel="stylesheet" href="css/semantic/semantic.css"> -->
     <script src="${springMacroRequestContext.contextPath}/js/jquery.min.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/bootstrap/bootstrap.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/bootstrap/bootstrap-dropdown-on-hover.js"></script>
 <#--layer-->
     <script src="${springMacroRequestContext.contextPath}/js/layer/layer.js"></script>
+    <script src="${springMacroRequestContext.contextPath}/js/page/page.js"></script>
 <#--wang-editor-->
     <script src="${springMacroRequestContext.contextPath}/js/wang-editor/wangEditor.min.js"></script>
 <#--七牛-->
@@ -176,8 +178,6 @@
 
 	 <#-- 在这里嵌入main content -->
 	 <#nested>
-
-	 <#include "${springMacroRequestContext.contextPath}/user/common/footer.ftl">
 </body>
 <script>
     var editor;
@@ -340,7 +340,7 @@
         user.register();
     });
     $("#searchBtn").click(function () {
-        window.location.href = "${springMacroRequestContext.contextPath}/page/search?searchTxt="+$("#search").val();
+        window.location.href = "${springMacroRequestContext.contextPath}/page/search?searchWord="+$("#search").val();
     })
     //发布闲置
     $("#publish_sell").click(function () {

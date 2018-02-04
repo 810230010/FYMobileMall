@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fy.mobile.mapper.SearchMapper">
+
+
+    <select id="listSearchResult" resultType="com.fy.mobile.entity.SearchResult">
+        (
+        select sell_id id,publisher_name,publisher_id,sell_title title,sell_price price, '闲置' type, publish_time
+        from fy_sell_publish
+        where state = 1
+        <if test="keyword != null or keyword != ''">and sell_title like '%${keyword}%'
+            or
+            sell_description like '%${keyword}%'
+        </if>
+        )
+        union all
+        (
+        select need_id id,publisher_name,publisher_id,need_title title,null price, '需求' type, publish_time
+        from fy_need_publish
+        <if test="keyword != null or keyword != ''">
+            where need_title like '%${keyword}%'
+            or need_description like '%${keyword}%'
+        </if>
+        )
+        order by publish_time
+    </select>
+</mapper>

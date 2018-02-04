@@ -27,9 +27,9 @@
         <h3>责任声明</h3>
         <caption>responsibility declaration</caption>
         <div class="divider-solid"></div>
-        <p>
-            本店商品均为易碎品，非质量问题谢绝退货，如有质量问题，本店承担运费调换
-        </p>
+        <ul style="list-style: none">
+            <li>本店商品均为易碎品，非质量问题谢绝退货，如有质量问题，本店承担运费调换</li>
+        </ul>
     </div>
 </div>
 <div style="height:100px; background-color: black;color: white" class="text-center";>

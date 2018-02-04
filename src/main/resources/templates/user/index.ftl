@@ -187,7 +187,7 @@
     </div>
     <div id="operation" style="position: absolute; right:80px;">
         <div class="search-wrapper row" style="position:relative;top:4px">
-            <button onclick="window.location.href='/page/search'" class="btn btn-primary" style="position: absolute; right:0px;bottom: 0">搜索</button>
+            <button id="searchBtn" class="btn btn-primary" style="position: absolute; right:0px;bottom: 0">搜索</button>
             <input id="search" type="text" class="form-control" placeholder="请搜索">
         </div>
         <#if currentUser?exists>
@@ -751,6 +751,10 @@
         $("#myModal").modal('hide');
         $("#register").modal();
     });
+    $("#searchBtn").click(function () {
+        alert($('#search').val())
+        window.location.href = '/page/search?searchWord='+ $('#search').val();
+    })
     //购物车
     $(document).click(function(e){
         e = window.event || e;
@@ -784,7 +788,7 @@
     $("#reg-btn").click(function () {
         user.register();
     });
-    $("#search").cl
+
     //发布闲置
     $("#publish_sell").click(function () {
         var sell_title = $("#sell-title").val();
