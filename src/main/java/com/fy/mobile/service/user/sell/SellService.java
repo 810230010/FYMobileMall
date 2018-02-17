@@ -3,11 +3,13 @@ package com.fy.mobile.service.user.sell;
 import com.fy.mobile.common.GlobalConstant;
 import com.fy.mobile.controller.user.sell.SellPublishDTO;
 import com.fy.mobile.entity.user.IndexSellItem;
+import com.fy.mobile.entity.user.MySellItem;
 import com.fy.mobile.entity.user.SellItemDetail;
 import com.fy.mobile.entity.user.UserLoginDTO;
 import com.fy.mobile.mapper.user.SellMapper;
 import com.fy.mobile.util.DateUtil;
 import com.fy.mobile.util.WebUtil;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +56,26 @@ public class SellService {
         SellItemDetail result = new SellItemDetail();
         result = sellMapper.getSellItemDetail(sellItemId);
         return result;
+    }
+
+    /**
+     * 获取我的所有闲置
+     * @param page
+     * @param pageSize
+     * @param orderColumn
+     * @param orderType
+     * @return
+     */
+    public List<MySellItem> listMySellItems(Integer page, Integer pageSize, String orderColumn, String orderType) {
+        List<MySellItem> list = new ArrayList<>();
+        UserLoginDTO loginDTO = WebUtil.findUserInSession(request);
+        if(loginDTO == null)
+            throw new RuntimeException("请登录");
+        PageHelper.startPage(page, pageSize);
+        return sellMapper.listMySellItems(loginDTO.getUserId(), orderColumn, orderType);
+    }
+
+    public void updateSellItemState(int state) {
+        sellMapper.updateSellItemState(state);
     }
 }

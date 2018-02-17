@@ -23,5 +23,25 @@
     <select id="getSellItemDetail" resultType="com.fy.mobile.entity.user.SellItemDetail">
         select * from fy_sell_publish;
     </select>
+    <!--获取我的所有闲置-->
+    <select id="listMySellItems" resultType="com.fy.mobile.entity.user.MySellItem">
+        select
+        sell_id,
+        sell_title,
+        image,
+        sell_description,
+        sell_price,
+        publish_time,
+        state stateCode
+        from fy_sell_publish
+        <where>
+            publisher_id = #{userId}
+        </where>
+        order by
+        sell_id desc
+        <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+            , ${orderColumn} ${orderType}
+        </if>
+    </select>
 
 </mapper>

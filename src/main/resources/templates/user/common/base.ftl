@@ -8,17 +8,16 @@
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/buttons/buttons.css"/>
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/wang-editor/wangEditor.min.css">
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/webuploader/webuploader.css">
-    <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/page/page.css">
+    <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/dataTables/datatables.min.css">
     <!-- <link rel="stylesheet" href="css/semantic/semantic.css"> -->
     <script src="${springMacroRequestContext.contextPath}/js/jquery.min.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/bootstrap/bootstrap.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/bootstrap/bootstrap-dropdown-on-hover.js"></script>
-<#--layer-->
-    <script src="${springMacroRequestContext.contextPath}/js/layer/layer.js"></script>
-    <script src="${springMacroRequestContext.contextPath}/js/page/page.js"></script>
-<#--wang-editor-->
+    <#--datatables-->
+    <script src="${springMacroRequestContext.contextPath}/js/dataTables/datatables.min.js"></script>
+    <#--wang-editor-->
     <script src="${springMacroRequestContext.contextPath}/js/wang-editor/wangEditor.min.js"></script>
-<#--七牛-->
+    <#--七牛-->
     <script src="${springMacroRequestContext.contextPath}/js/qiniu/qiniu.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/plupload/plupload.full.min.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/plupload/zh_CN.js"></script>

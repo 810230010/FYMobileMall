@@ -2,7 +2,7 @@
 <#import "${springMacroRequestContext.contextPath}/user/common/base.ftl" as defaultLayout>
 
 <#-- 调用布局指令 -->
-<@defaultLayout.layout base_title="闲置详情" base_css=[]>
+<@defaultLayout.layout base_title="闲置详情" showLeftNav=false base_css=[]>
 
 <div class="container">
     <div class="search-title" style="height: 60px;">
@@ -33,7 +33,11 @@
     <div class="clearfix"></div>
     <div class="divider-solid" style="margin-top: 20px"></div>
     <div class="buy" style="margin-top: 30px">
-        <button id="buy" class="btn btn-primary pull-right col-md-2">购买</button>
+        <#if currentUser?exists>
+            <#if currentUser.userId != sellDetail.publisherId>
+                <button id="buy" class="btn btn-primary pull-right col-md-2">购买</button>
+            </#if>
+        </#if>
     </div>
 
 </div>
