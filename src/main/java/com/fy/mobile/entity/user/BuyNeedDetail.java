@@ -2,6 +2,8 @@ package com.fy.mobile.entity.user;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class BuyNeedDetail {
     private Integer needId;
@@ -10,5 +12,5 @@ public class BuyNeedDetail {
     private String needTitle;
     private String needDescription;
     private String publishTime;
-    
+    private List<Message> messageList;
 }

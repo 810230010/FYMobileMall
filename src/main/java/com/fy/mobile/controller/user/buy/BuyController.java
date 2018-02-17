@@ -4,6 +4,7 @@ import com.fy.mobile.entity.common.RestResult;
 import com.fy.mobile.entity.user.BuyNeedDTO;
 import com.fy.mobile.entity.user.BuyNeedDetail;
 import com.fy.mobile.entity.user.IndexBuyNeedDTO;
+import com.fy.mobile.entity.user.Message;
 import com.fy.mobile.service.user.buy.BuyService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -39,7 +41,7 @@ public class BuyController {
      */
     public RestResult getPublishedNeedDetail(@Param("needId") Integer needId, Model model){
         RestResult result = new RestResult();
-        BuyNeedDetail needDetail = buyService.getBuyNeedDetail(needId);
+
         return result.ok();
     }
 
@@ -48,7 +50,20 @@ public class BuyController {
      * @return
      */
     @RequestMapping("/page/need/detail")
-    public String viewToBuyNeedDetail(){
+    public String viewToBuyNeedDetail(@RequestParam("itemId") Integer needId, Model model){
+        BuyNeedDetail needDetail = buyService.getBuyNeedDetail(needId);
+        model.addAttribute("needDetail", needDetail);
         return "/user/buy/need_detail";
+    }
+
+    /**
+     * 添加需求留言
+     */
+    @RequestMapping(value = "/need/message", method = RequestMethod.POST)
+    @ResponseBody
+    public RestResult addNeedMessage(Message needMessage){
+        RestResult result = new RestResult();
+        int affectedRow = buyService.addBuyNeedMessage(needMessage);
+        return result.ok();
     }
 }

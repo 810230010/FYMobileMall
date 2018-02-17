@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fy.mobile.mapper.user.OrderMapper">
+    <!--添加收货地址-->
+    <insert id="insertAddress">
+        insert into fy_address(address_name, goods_taker, tel,created_user_id, create_time)
+        values (#{addressName}, #{goodsTaker}, #{tel}, #{createdUserId}, #{createTime});
+    </insert>
+    <!--添加订单-->
+    <insert id="insertOrder">
+        insert into fy_order(order_id, buy_user_id, buy_user_name, sell_item_id, sell_user_id, sell_user_name, create_time,pay_price)
+        values (#{orderId}, #{buyUserId}, #{buyUserName}, #{sellItemId}, #{sellUserId}, #{sellUserName}, #{createTime}, #{payPrice})
+    </insert>
+    <select id="listAllAddress" resultType="com.fy.mobile.entity.user.Address">
+        select * from fy_address
+        where created_user_id = #{userId}
+        order by create_time desc;
+    </select>
+</mapper>

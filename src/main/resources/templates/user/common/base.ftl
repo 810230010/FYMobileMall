@@ -1,4 +1,4 @@
-<#macro layout base_title >
+<#macro layout base_title base_css=[]>
 <html>
 <title>${base_title}</title>
 <head>
@@ -173,6 +173,10 @@
         z-index:1000;
     }
 </style>
+<#--遍历扩展页css-->
+    <#list base_css as c>
+    <link rel="stylesheet" href="${c}">
+    </#list>
 <body>
     <#include "${springMacroRequestContext.contextPath}/user/common/head.ftl">
 

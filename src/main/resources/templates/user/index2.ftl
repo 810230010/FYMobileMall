@@ -2,7 +2,7 @@
 <#import "${springMacroRequestContext.contextPath}/user/common/base.ftl" as defaultLayout>
 
 <#-- 调用布局指令 -->
-<@defaultLayout.layout base_title="首页">
+<@defaultLayout.layout base_title="首页" base_css=[]>
 
 <!--轮播图-->
 <div class="body">

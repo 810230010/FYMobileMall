@@ -6,6 +6,11 @@
         insert into fy_need_publish(publisher_id, publisher_name, need_title, need_description,publish_time)
         values (#{userId}, #{nickname}, #{title}, #{description}, #{publishTime});
     </insert>
+    <!--添加需求留言-->
+    <insert id="insertBuyNeedMessage">
+        insert into fy_message(message, message_type, message_publisher_id, message_publisher_name, need_sell_id, publish_time)
+        values (#{message}, #{messageType}, ${messagePublisherId}, #{messagePublisherName}, #{needSellId}, #{publishTime})
+    </insert>
     <select id="listIndexBuyNeeds" resultType="com.fy.mobile.entity.user.IndexBuyNeedDTO">
         select need_id needId,
         publisher_name publisherName,
@@ -16,5 +21,16 @@
         from fy_need_publish
         ORDER BY publish_time
         limit 8;
+    </select>
+    <select id="getBuyNeedInfo" resultType="com.fy.mobile.entity.user.BuyNeedDetail">
+        select need_id, publisher_id, publisher_name, need_title, need_description,publish_time from fy_need_publish
+        where need_id = #{needId};
+    </select>
+    <!--获取需求所有留言-->
+    <select id="listAllMessageInNeed" resultType="com.fy.mobile.entity.user.Message">
+        select * from fy_message
+        where message_type = 0
+        and need_sell_id = #{needId}
+        order by publish_time desc;
     </select>
 </mapper>

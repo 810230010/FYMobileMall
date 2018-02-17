@@ -6,6 +6,9 @@
         insert into fy_sell_publish(publisher_id, publisher_name, sell_title, sell_description,publish_time, image, sell_price, brand_name)
         values (#{publisherId}, #{publisherName}, #{sellTitle}, #{sellDescription}, #{publishTime}, #{image}, #{sellPrice}, #{brandName});
     </insert>
+    <update id="updateSellItemState">
+        update fy_sell_publish set state = #{state}
+    </update>
     <select id="listTop8SellItem" resultType="com.fy.mobile.entity.user.IndexSellItem">
         select sell_id,
         sell_title,
@@ -16,6 +19,9 @@
         where state = 1
         order by publish_time
         limit 8;
+    </select>
+    <select id="getSellItemDetail" resultType="com.fy.mobile.entity.user.SellItemDetail">
+        select * from fy_sell_publish;
     </select>
 
 </mapper>

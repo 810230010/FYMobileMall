@@ -1,10 +1,7 @@
 package com.fy.mobile.service.user.buy;
 
 import com.fy.mobile.common.GlobalConstant;
-import com.fy.mobile.entity.user.BuyNeedDTO;
-import com.fy.mobile.entity.user.BuyNeedDetail;
-import com.fy.mobile.entity.user.IndexBuyNeedDTO;
-import com.fy.mobile.entity.user.UserLoginDTO;
+import com.fy.mobile.entity.user.*;
 import com.fy.mobile.mapper.user.BuyMapper;
 import com.fy.mobile.util.DateUtil;
 import com.fy.mobile.util.WebUtil;
@@ -39,7 +36,31 @@ public class BuyService {
         return indexBuyNeedDTOS;
     }
 
+    /**
+     * 获取需求详情
+     * @param needId
+     * @return
+     */
     public BuyNeedDetail getBuyNeedDetail(Integer needId) {
-        return null;
+        List<Message> messageList = buyMapper.listAllMessageInNeed(needId);
+        BuyNeedDetail buyNeedDetail = buyMapper.getBuyNeedInfo(needId);
+        buyNeedDetail.setMessageList(messageList);
+        return buyNeedDetail;
+    }
+
+    /**
+     * 添加需求留言
+     * @param needMessage
+     * @return
+     */
+    public int addBuyNeedMessage(Message needMessage) {
+        String now = (String)DateUtil.createDateWithFormat(Date.class, String.class, new Date(), GlobalConstant.DATE_TIME_FORMAT);
+        needMessage.setPublishTime(now);
+        UserLoginDTO loginDTO = WebUtil.findUserInSession(request);
+        needMessage.setMessagePublisherId(loginDTO.getUserId());
+        needMessage.setMessagePublisherName(loginDTO.getNickname());
+        needMessage.setMessageType(0);
+        int affected = buyMapper.insertBuyNeedMessage(needMessage);
+        return affected;
     }
 }

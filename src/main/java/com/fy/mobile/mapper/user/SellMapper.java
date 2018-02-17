@@ -2,6 +2,7 @@ package com.fy.mobile.mapper.user;
 
 import com.fy.mobile.controller.user.sell.SellPublishDTO;
 import com.fy.mobile.entity.user.IndexSellItem;
+import com.fy.mobile.entity.user.SellItemDetail;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,4 +21,13 @@ public interface SellMapper {
      * @return
      */
     List<IndexSellItem> listTop8SellItem();
+
+    /**
+     * 获取闲置详情
+     * @param sellItemId
+     * @return
+     */
+    SellItemDetail getSellItemDetail(Integer sellItemId);
+
+    void updateSellItemState(Integer state);
 }

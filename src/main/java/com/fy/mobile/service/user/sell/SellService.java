@@ -3,6 +3,7 @@ package com.fy.mobile.service.user.sell;
 import com.fy.mobile.common.GlobalConstant;
 import com.fy.mobile.controller.user.sell.SellPublishDTO;
 import com.fy.mobile.entity.user.IndexSellItem;
+import com.fy.mobile.entity.user.SellItemDetail;
 import com.fy.mobile.entity.user.UserLoginDTO;
 import com.fy.mobile.mapper.user.SellMapper;
 import com.fy.mobile.util.DateUtil;
@@ -41,6 +42,17 @@ public class SellService {
     public List<IndexSellItem> listTop8SellItem(){
         List<IndexSellItem> result = new ArrayList<>();
         result = sellMapper.listTop8SellItem();
+        return result;
+    }
+
+    /**
+     * 获取闲置详情
+     * @param sellItemId
+     * @return
+     */
+    public SellItemDetail getSellItemDetail(Integer sellItemId) {
+        SellItemDetail result = new SellItemDetail();
+        result = sellMapper.getSellItemDetail(sellItemId);
         return result;
     }
 }
