@@ -2,7 +2,7 @@
 <#import "${springMacroRequestContext.contextPath}/user/common/base.ftl" as defaultLayout>
 
 <#-- 调用布局指令 -->
-<@defaultLayout.layout base_title="下单成功" base_css=["${springMacroRequestContext.contextPath}/css/order.css"]>
+<@defaultLayout.layout base_title="下单成功" showLeftNav=false base_css=["${springMacroRequestContext.contextPath}/css/order.css"]>
 
 <div class="container" style="padding-top: 30px">
    <h3>恭喜，下单成功!</h3>

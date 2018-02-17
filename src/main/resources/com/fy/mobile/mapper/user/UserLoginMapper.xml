@@ -6,6 +6,19 @@
         INSERT INTO fy_user(nickname, tel, password, create_time)
         VALUES (#{nickname}, #{tel}, #{password}, #{createTime});
     </insert>
+    <update id="updateUserInfo">
+        update fy_user
+        <set>
+            <if test="tel != null and tel != ''">
+                tel = #{tel}
+            </if>
+            <if test="password != null and password != ''">
+                password = #{newPassword}
+            </if>
+        </set>
+        where user_id = #{userId}
+        and user_type = 0
+    </update>
     <!--普通用户验证登录-->
     <select id="getUserByUsernameAndPassword" resultType="com.fy.mobile.entity.user.UserLoginDTO">
         select
@@ -21,4 +34,32 @@
     <select id="getNicknameAndCheck" resultType="java.lang.String">
         select nickname from fy_user where nickname = #{nickname};
     </select>
+    <select id="findByUserId" resultType="com.fy.mobile.entity.user.UserLoginDTO">
+        select * from fy_user
+        where user_id = #{userId}
+        and password = #{password}
+        and user_type = 0
+    </select>
+    <!--闲置总数-->
+    <select id="getTotalSellCount" resultType="java.lang.Integer">
+        select count(*) from fy_sell_publish
+        where publisher_id = #{userId}
+    </select>
+    <!--需求总数-->
+    <select id="getTotalNeedCount" resultType="java.lang.Integer">
+        select count(*) from fy_need_publish
+        where publisher_id = #{userId}
+    </select>
+    <!--卖出总数-->
+    <select id="getTotalSellSuccessCount" resultType="java.lang.Integer">
+        select count(*) from fy_order
+        where sell_user_id = #{userId}
+        and state = 1
+    </select>
+    <select id="getTotalBuyCount" resultType="java.lang.Integer">
+        select count(*) from fy_order
+        where buy_user_id = #{userId}
+        and state = 1
+    </select>
+
 </mapper>

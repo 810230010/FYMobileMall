@@ -2,7 +2,7 @@
 <#import "${springMacroRequestContext.contextPath}/user/common/base.ftl" as defaultLayout>
 
 <#-- 调用布局指令 -->
-<@defaultLayout.layout base_title="需求详情" base_css=[]>
+<@defaultLayout.layout base_title="需求详情" showLeftNav=false base_css=[]>
 
 <div class="container">
     <div class="search-title" style="height: 60px;">

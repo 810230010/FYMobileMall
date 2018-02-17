@@ -1,4 +1,4 @@
-<#macro layout base_title base_css=[]>
+<#macro layout base_title showLeftNav base_css=[]>
 <html>
 <title>${base_title}</title>
 <head>
@@ -177,9 +177,11 @@
     <#list base_css as c>
     <link rel="stylesheet" href="${c}">
     </#list>
-<body>
+<body style="background-color: #eee">
     <#include "${springMacroRequestContext.contextPath}/user/common/head.ftl">
-
+    <#if showLeftNav == true>
+        <#include "${springMacroRequestContext.contextPath}/user/common/left-nav.ftl">
+    </#if>
 	 <#-- 在这里嵌入main content -->
 	 <#nested>
 </body>

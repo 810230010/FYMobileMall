@@ -1,0 +1,8 @@
+div .menu ul li{
+    height:44px;
+    line-height: 44px;
+}
+div .menu ul li:hover{
+    background-color: silver;
+}
+.active{background-color: silver;color: white;border-left: 5px solid #c23}

@@ -23,7 +23,7 @@
                     <a id="menu-title" style="color: silver;" href="#" data-toggle="dropdown">
                         欢迎您， <span id="nick">${currentUser.nickname}!</span><b class="caret"></b></a>
                     <ul class="dropdown-menu animated" data-animation="fadeInDown">
-                        <li><a href="#">我的信息</a></li>
+                        <li><a href="/profile/page/myBasicProfileInfo">我的信息</a></li>
                         <li><a href="#">我的订单</a></li>
                         <li><a href="#">消息提醒</a></li>
                         <li><a href="#">我的需求</a></li>

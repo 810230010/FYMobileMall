@@ -1,20 +1,27 @@
 package com.fy.mobile.service.user;
 
 import com.fy.mobile.entity.common.RestResult;
+import com.fy.mobile.entity.user.UserForUpdate;
 import com.fy.mobile.entity.user.UserRegisterDTO;
 import com.fy.mobile.mapper.user.UserLoginMapper;
 import com.fy.mobile.entity.user.UserLoginDTO;
 import com.fy.mobile.util.DateUtil;
 import com.fy.mobile.util.DigestUtil;
+import com.fy.mobile.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserLoginService {
     @Autowired
     private UserLoginMapper userLoginMapper;
+    @Autowired
+    private HttpServletRequest request;
 
     /**
      * 检验用户登录
@@ -56,6 +63,62 @@ public class UserLoginService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    /**
+     * 修改个人信息
+     */
+    public RestResult editBasicInfo(UserForUpdate userForUpdate){
+        RestResult result = new RestResult();
+        String password = userForUpdate.getOldPassword();
+        UserLoginDTO login = WebUtil.findUserInSession(request);
+        if(login == null)
+            throw new RuntimeException("请登录");
+        Integer userId = login.getUserId();
+        try {
+            String encrypted = DigestUtil.encryptSHA(password);
+            UserLoginDTO loginDTO = userLoginMapper.findByUserId(userId, encrypted);
+            if(loginDTO == null){
+                return result.error("密码不正确");
+            }
+            userForUpdate.setUserId(userId);
+            userForUpdate.setNewPassword(loginDTO.getPassword());
+            String newPass = DigestUtil.encryptSHA(userForUpdate.getNewPassword());
+            userForUpdate.setNewPassword(newPass);
+            userLoginMapper.updateUserInfo(userForUpdate);
+            if(!userForUpdate.getNewPassword().equals(userForUpdate.getOldPassword())){
+                WebUtil.logout(request);
+                return result.ok(1);
+            }
+            return result.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 获取某人统计信息
+     * @param userId
+     * @return
+     */
+    public Map getPersonAnalys(Integer userId){
+        Map<String, Object> result = new HashMap<>();
+        //所有闲置数
+        Integer sellCount = userLoginMapper.getTotalSellCount(userId);
+        //需求总数
+        Integer needCount = userLoginMapper.getTotalNeedCount(userId);
+        //卖出总数
+        Integer sellSuccessCount = userLoginMapper.getTotalSellSuccessCount(userId);
+        //买入总数
+        Integer buyCount = userLoginMapper.getTotalBuyCount(userId);
+
+        result.put("sellCount", sellCount);
+        result.put("needCount", needCount);
+        result.put("sellSuccessCount", sellSuccessCount);
+        result.put("buyCount", buyCount);
+
         return result;
     }
 }

@@ -32,6 +32,9 @@ public class RestResult<T> {
     public RestResult ok(String message, T data){
         return new RestResult(SUCCESS_CODE, data, message);
     }
+    public RestResult ok(Integer code){
+        return new RestResult(code);
+    }
     public RestResult ok(T data){
         return new RestResult(SUCCESS_CODE, data, SUCCESS_MSG);
     }
