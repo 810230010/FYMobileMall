@@ -5,6 +5,7 @@ import com.fy.mobile.entity.user.BuyNeedDetail;
 import com.fy.mobile.entity.user.IndexBuyNeedDTO;
 import com.fy.mobile.entity.user.Message;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -39,4 +40,13 @@ public interface BuyMapper {
      * @return
      */
     int insertBuyNeedMessage(Message needMessage);
+
+    /**
+     * 获取我的需求
+     * @param userId
+     * @param orderColumn
+     * @param orderType
+     * @return
+     */
+    List<BuyNeedDetail> listMyNeed(@Param("userId") Integer userId, @Param("orderColumn") String orderColumn, @Param("orderType") String orderType);
 }

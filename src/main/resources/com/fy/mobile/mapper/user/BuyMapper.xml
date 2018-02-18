@@ -33,4 +33,13 @@
         and need_sell_id = #{needId}
         order by publish_time desc;
     </select>
+    <!--获取我的需求-->
+    <select id="listMyNeed" resultType="com.fy.mobile.entity.user.BuyNeedDetail">
+        select * from fy_need_publish
+        where publisher_id = #{userId}
+        order by need_id desc
+        <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+            , ${orderColumn} ${orderType}
+        </if>
+    </select>
 </mapper>

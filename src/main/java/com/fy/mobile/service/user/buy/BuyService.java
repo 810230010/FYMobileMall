@@ -5,6 +5,7 @@ import com.fy.mobile.entity.user.*;
 import com.fy.mobile.mapper.user.BuyMapper;
 import com.fy.mobile.util.DateUtil;
 import com.fy.mobile.util.WebUtil;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +63,22 @@ public class BuyService {
         needMessage.setMessageType(0);
         int affected = buyMapper.insertBuyNeedMessage(needMessage);
         return affected;
+    }
+
+    /**
+     * 获取我的需求
+     * @param page
+     * @param pageSize
+     * @param orderColumn
+     * @param orderType
+     * @return
+     */
+    public List<BuyNeedDetail> listMyNeed(Integer page, Integer pageSize, String orderColumn, String orderType) {
+        UserLoginDTO loginDTO = WebUtil.findUserInSession(request);
+        if(loginDTO == null)
+            throw new RuntimeException("请登录");
+        Integer userId = loginDTO.getUserId();
+        PageHelper.startPage(page, pageSize);
+        return buyMapper.listMyNeed(userId, orderColumn, orderType);
     }
 }

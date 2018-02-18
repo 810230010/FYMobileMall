@@ -2,10 +2,7 @@ package com.fy.mobile.service.user.sell;
 
 import com.fy.mobile.common.GlobalConstant;
 import com.fy.mobile.controller.user.sell.SellPublishDTO;
-import com.fy.mobile.entity.user.IndexSellItem;
-import com.fy.mobile.entity.user.MySellItem;
-import com.fy.mobile.entity.user.SellItemDetail;
-import com.fy.mobile.entity.user.UserLoginDTO;
+import com.fy.mobile.entity.user.*;
 import com.fy.mobile.mapper.user.SellMapper;
 import com.fy.mobile.util.DateUtil;
 import com.fy.mobile.util.WebUtil;
@@ -78,4 +75,5 @@ public class SellService {
     public void updateSellItemState(int state) {
         sellMapper.updateSellItemState(state);
     }
+
 }

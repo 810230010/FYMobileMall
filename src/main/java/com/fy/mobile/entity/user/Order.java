@@ -18,4 +18,5 @@ public class Order {
     private String createTime;
     private String goodsPublishTime;
     private String payPrice;
+    private Integer addressId;
 }

@@ -13,7 +13,7 @@
     <div class="address-list">
         <#list addressList as address >
             <#if address_index == 0>
-            <div class="address-item address-selected" address="${address.addressName}" accepter="${address.goodsTaker}" tel="${address.tel}">
+            <div class="address-item address-selected" addressId="${address.addressId}" address="${address.addressName}" accepter="${address.goodsTaker}" tel="${address.tel}">
                 <span class="mark"><i class="fa fa-map-marker" style="color: #f40"></i>寄送至</span>
                 <span class="address-item-text">${address.addressName}（${address.goodsTaker} 收）</span>
                 <span class="pull-right">
@@ -44,6 +44,7 @@
             <thead>
             <tr>
                 <th>标题</th>
+                <th>图片</th>
                 <th>卖家</th>
                 <th>价格</th>
                 <th>付款方式</th>
@@ -51,9 +52,10 @@
             </thead>
             <tbody>
             <tr>
-                <td class="col-md-3"><a>${sellItem.sellTitle}</a></td>
+                <td class="col-md-2"><a>${sellItem.sellTitle}</a></td>
+                <td class="col-md-2"><img src="${sellItem.image}" style="width: 40px; height: 40px" alt=""></td>
                 <td class="col-md-3"><a>${sellItem.publisherName}</td>
-                <td class="col-md-3"><span style="color:red">¥${sellItem.sellPrice}</span></td>
+                <td class="col-md-2"><span style="color:red">¥${sellItem.sellPrice}</span></td>
                 <td class="col-md-3">
                     <div class="btn-group" data-toggle="buttons-radio">
                         <button class="btn btn-primary">货到付款</button>
@@ -179,7 +181,8 @@ $("#addAddress").click(function () {
                     sellItemId: "${sellItem.sellId}",
                     sellUserId: "${sellItem.publisherId}",
                     sellUserName: "${sellItem.publisherName}",
-                    payPrice: price
+                    payPrice: price,
+                    addressId: parseInt($(".address-selected").attr('addressId'))
                 },
                 success: function (result) {
                     if(result.code == 0){

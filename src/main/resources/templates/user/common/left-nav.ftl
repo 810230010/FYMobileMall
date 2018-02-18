@@ -33,8 +33,8 @@
         </div>
         <div style="height:88px;vertical-align: middle">
             <ul style="list-style: none;padding-left:0">
-                <li class="a" style="height:44px;cursor: pointer;text-align: center">我购买的</li>
-                <li class="a" style="height:44px;cursor: pointer;text-align: center">我售出的</li>
+                <li class="a" onclick="window.location.href='/profile/page/myBuyOrder'" style="height:44px;cursor: pointer;text-align: center">我购买的</li>
+                <li class="a" style="height:44px;cursor: pointer;text-align: center" onclick="window.location.href='/profile/page/mySellOrder'">我售出的</li>
             </ul>
         </div>
         <div style="height:44px;padding-left: 30px">
@@ -42,7 +42,7 @@
         </div>
         <div style="height:44px;">
             <ul style="list-style: none;padding-left: 0">
-                <li class="a" style="height:44px;cursor: pointer;text-align: center">所有需求</li>
+                <li class="a" onclick="window.location.href='/profile/page/allNeedPublish'" style="height:44px;cursor: pointer;text-align: center">所有需求</li>
             </ul>
         </div>
     </div>

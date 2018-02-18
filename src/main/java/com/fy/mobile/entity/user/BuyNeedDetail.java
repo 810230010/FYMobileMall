@@ -12,5 +12,6 @@ public class BuyNeedDetail {
     private String needTitle;
     private String needDescription;
     private String publishTime;
+    private Integer commentNo;
     private List<Message> messageList;
 }

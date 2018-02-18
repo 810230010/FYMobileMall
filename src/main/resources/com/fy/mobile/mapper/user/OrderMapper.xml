@@ -8,12 +8,75 @@
     </insert>
     <!--添加订单-->
     <insert id="insertOrder">
-        insert into fy_order(order_id, buy_user_id, buy_user_name, sell_item_id, sell_user_id, sell_user_name, create_time,pay_price)
-        values (#{orderId}, #{buyUserId}, #{buyUserName}, #{sellItemId}, #{sellUserId}, #{sellUserName}, #{createTime}, #{payPrice})
+        insert into fy_order(order_id, buy_user_id, buy_user_name, sell_item_id, sell_user_id, sell_user_name, create_time,pay_price, address_id)
+        values (#{orderId}, #{buyUserId}, #{buyUserName}, #{sellItemId}, #{sellUserId}, #{sellUserName}, #{createTime}, #{payPrice}, #{addressId})
     </insert>
+    <!--修改订单状态-->
+    <update id="updateOrderState">
+        update fy_order set state = #{state}
+    </update>
     <select id="listAllAddress" resultType="com.fy.mobile.entity.user.Address">
         select * from fy_address
         where created_user_id = #{userId}
         order by create_time desc;
+    </select>
+    <!--获取我购买的所有订单-->
+    <select id="listMyBuyOrder" resultType="com.fy.mobile.entity.user.OrderDetail">
+        select a.order_id,
+        b.sell_id,
+        a.sell_user_id,
+        a.sell_user_name,
+        a.state stateCode,
+        b.sell_title,
+        if(a.pay_type = 0, '货到付款', '在线付款') pay_type,
+        a.pay_price,
+        b.image,
+        a.create_time
+        from fy_order a, fy_sell_publish b
+        where a.sell_item_id = b.sell_id
+        and a.buy_user_id = #{userId}
+        order by a.create_time desc
+        <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+            , ${orderColumn} ${orderType}
+        </if>
+    </select>
+    <select id="getOrderDetail" resultType="com.fy.mobile.entity.user.OrderDetail">
+        select
+        a.order_id,
+        a.sell_item_id,
+        a.sell_user_id,
+        a.sell_user_name,
+        c.sell_title,
+        a.state stateCode,
+        a.pay_price,
+        a.create_time,
+        c.image,
+        if(a.pay_type = 0, '货到付款', '在线付款') pay_type,
+        b.address_name,
+        b.goods_taker,
+        b.tel
+        from fy_order a, fy_address b, fy_sell_publish c
+        where a.order_id = #{orderId}
+        and a.sell_user_id = c.publisher_id
+        and a.address_id = b.address_id
+    </select>
+    <select id="listMySellOrder" resultType="com.fy.mobile.entity.user.OrderDetail">
+        select a.order_id,
+        b.sell_id,
+        a.buy_user_id,
+        a.buy_user_name,
+        a.state stateCode,
+        b.sell_title,
+        if(a.pay_type = 0, '货到付款', '在线付款') pay_type,
+        a.pay_price,
+        b.image,
+        a.create_time
+        from fy_order a, fy_sell_publish b
+        where a.sell_item_id = b.sell_id
+        and a.sell_user_id = #{userId}
+        order by a.create_time desc
+        <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+            , ${orderColumn} ${orderType}
+        </if>
     </select>
 </mapper>

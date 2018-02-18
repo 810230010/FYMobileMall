@@ -24,9 +24,9 @@
                         欢迎您， <span id="nick">${currentUser.nickname}!</span><b class="caret"></b></a>
                     <ul class="dropdown-menu animated" data-animation="fadeInDown">
                         <li><a href="/profile/page/myBasicProfileInfo">我的信息</a></li>
-                        <li><a href="#">我的订单</a></li>
-                        <li><a href="#">消息提醒</a></li>
-                        <li><a href="#">我的需求</a></li>
+                        <li><a href="/profile//page/myBuyOrder">我的订单</a></li>
+                        <li><a href="/profile/page/myBasicProfileInfo">消息提醒</a></li>
+                        <li><a href="/profile/page/allNeedPublish">我的需求</a></li>
                         <li><a href="${springMacroRequestContext.contextPath}/user/logout">注销</a></li>
                     </ul>
                 </li>
