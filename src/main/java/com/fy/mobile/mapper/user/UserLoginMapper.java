@@ -69,4 +69,6 @@ public interface UserLoginMapper {
      * 买入总数
      */
     Integer getTotalBuyCount(Integer userId);
+
+    UserLoginDTO getUserByUserId(Integer userId);
 }

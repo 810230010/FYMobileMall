@@ -1,6 +1,7 @@
 package com.fy.mobile.mapper.user;
 
 import com.fy.mobile.entity.user.Address;
+import com.fy.mobile.entity.user.Message;
 import com.fy.mobile.entity.user.Order;
 import com.fy.mobile.entity.user.OrderDetail;
 import org.apache.ibatis.annotations.Mapper;
@@ -60,4 +61,18 @@ public interface OrderMapper {
      * @return
      */
     List<OrderDetail> listMySellOrder(@Param("userId") Integer userId, @Param("orderColumn") String orderColumn, @Param("orderType") String orderType);
+
+    /**
+     * 添加售后留言
+     * @param orderMessage
+     * @return
+     */
+    int insertOrderMessage(Message orderMessage);
+
+    /**
+     * 获取售后留言
+     * @param sellItemId
+     * @return
+     */
+    List<Message> getOrderMessage(Integer sellItemId);
 }

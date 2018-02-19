@@ -43,5 +43,27 @@
             , ${orderColumn} ${orderType}
         </if>
     </select>
+    <!--获取所有闲置-->
+    <select id="listAllSellItems" resultType="com.fy.mobile.entity.user.IndexSellItem">
+        select sell_id,
+        sell_title,
+        sell_description,
+        image,
+        sell_price
+        from fy_sell_publish
+        where state = 1
+        order by sell_id
+    </select>
+    <select id="listAllSellItemsByUserId" resultType="com.fy.mobile.entity.user.IndexSellItem">
+        select sell_id,
+        sell_title,
+        sell_description,
+        image,
+        sell_price,
+        state stateCode
+        from fy_sell_publish
+        where publisher_id = #{userId}
+        order by sell_id
+    </select>
 
 </mapper>

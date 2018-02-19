@@ -1,10 +1,7 @@
 package com.fy.mobile.service.user.order;
 
 import com.fy.mobile.common.GlobalConstant;
-import com.fy.mobile.entity.user.Address;
-import com.fy.mobile.entity.user.Order;
-import com.fy.mobile.entity.user.OrderDetail;
-import com.fy.mobile.entity.user.UserLoginDTO;
+import com.fy.mobile.entity.user.*;
 import com.fy.mobile.mapper.user.OrderMapper;
 import com.fy.mobile.mapper.user.SellMapper;
 import com.fy.mobile.util.DateUtil;
@@ -124,5 +121,22 @@ public class OrderService {
         Integer userId =  loginDTO.getUserId();
         PageHelper.startPage(page, pageSize);
         return orderMapper.listMySellOrder(userId, orderColumn, orderType);
+    }
+
+    /**
+     * 添加售后留言
+     * @param orderMessage
+     * @return
+     */
+    public int addOrderMessage(Message orderMessage) {
+        String now = (String)DateUtil.createDateWithFormat(Date.class, String.class, new Date(), GlobalConstant.DATE_TIME_FORMAT);
+        orderMessage.setPublishTime(now);
+        UserLoginDTO loginDTO = WebUtil.findUserInSession(request);
+        orderMessage.setMessagePublisherId(loginDTO.getUserId());
+        orderMessage.setMessagePublisherName(loginDTO.getNickname());
+        //type  0：需求留言   1：售后留言
+        orderMessage.setMessageType(1);
+        int affected = orderMapper.insertOrderMessage(orderMessage);
+        return affected;
     }
 }

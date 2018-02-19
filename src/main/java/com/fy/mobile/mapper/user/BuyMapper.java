@@ -49,4 +49,17 @@ public interface BuyMapper {
      * @return
      */
     List<BuyNeedDetail> listMyNeed(@Param("userId") Integer userId, @Param("orderColumn") String orderColumn, @Param("orderType") String orderType);
+
+    /**
+     * 获取所有需求
+     * @return
+     */
+    List<BuyNeedDetail> listAllBuyNeed();
+
+    /**
+     * 获取某人的所有需求
+     * @param userId
+     * @return
+     */
+    List<IndexBuyNeedDTO> listAllBuyNeedByUserId(Integer userId);
 }

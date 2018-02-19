@@ -66,4 +66,5 @@ public class BuyController {
         int affectedRow = buyService.addBuyNeedMessage(needMessage);
         return result.ok();
     }
+
 }

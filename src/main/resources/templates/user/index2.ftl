@@ -88,7 +88,7 @@
                 最新发布&nbsp;&nbsp;
                 <span style="font-size: 14px;">最新的在这里。</span>
                 <div class="more pull-right">
-                    <a style="position: relative;bottom: 10px;right:10px" href="#" class="button button-glow button-border button-rounded button-primary">MORE+</a>
+                    <a href="/page/sell/more" style="position: relative;bottom: 10px;right:10px" href="#" class="button button-glow button-border button-rounded button-primary">MORE+</a>
                 </div>
             </h3>
         </div>
@@ -102,11 +102,14 @@
                 </div>
                 <div class="newest-goods col-md-9">
                     <#list sellItems as sellItem>
-                        <a href="/sell/item/detail">
+                        <a href="/sell/page/publish/detail?itemId=${sellItem.sellId}">
                             <div class="goods-item col-md-3">
                                 <div class="thumbnail" style="padding-left: 0; padding-right: 0">
-                                    <img src="${springMacroRequestContext.contextPath}/img/goods.jpg"
-                                         alt="通用的占位符缩略图" style="width: 75%;height: 140px">
+                                    <div style="padding-left: 10;">
+                                        <img src="${sellItem.image}"
+                                             alt="通用的占位符缩略图" style="height: 140px">
+                                    </div>
+
                                     <div class="caption text-center" style="position:relative;height:60px">
                                         <span>${sellItem.sellTitle}</span>
                                         <span style="position: absolute; right:20px;bottom:0;color: red">¥${sellItem.sellPrice}</span>
@@ -128,7 +131,7 @@
                 最新需求&nbsp;&nbsp;
                 <span style="font-size: 14px;">这里应该有你喜欢的。</span>
                 <div class="more pull-right">
-                    <a style="position: relative;bottom: 10px;right:10px" href="#" class="button button-glow button-border button-rounded button-primary">MORE+</a>
+                    <a style="position: relative;bottom: 10px;right:10px" href="/page/need/more" class="button button-glow button-border button-rounded button-primary">MORE+</a>
                 </div>
             </h3>
         </div>
@@ -137,22 +140,14 @@
                 <div class="col-md-12" style="position: relative;">
                     <#list buyNeeds as needItem>
                         <div class="need-item col-md-6" style="height: 70px;padding-top: 10px;border: 1px solid silver;">
-                            <a href="#">${needItem.title}</a>
-                            <span style="position: absolute;right:20px;bottom: 10px;"><a href="#">${needItem.publisherName}</a>发布于<b>${needItem.publishTime}</b></span>
+                            <a href="/buy/page/need/detail?itemId=${needItem.needId}">${needItem.title}</a>
+                            <span style="position: absolute;right:20px;bottom: 10px;"><a href="/profile/page/sellerInfo?userId=${needItem.publisherId}">${needItem.publisherName}</a>发布于<b>${needItem.publishTime}</b></span>
                             <span style="position: absolute; left:14px; bottom:10px;">
                                 <i class="fa fa-comment"></i>${needItem.commentNo}
                                 <i class="fa fa-eye" style="margin-left:20px">30</i>
                             </span>
                         </div>
                     </#list>
-                    <div class="need-item col-md-6" style="height: 70px;padding-top: 10px;border: 1px solid silver;">
-                        <a href="#">求一部肾10啊</a>
-                        <span style="position: absolute;right:20px;bottom: 10px;"><a href="#">Bonjour</a>发布于<b>2018-01-31 12:00:00</b></span>
-                        <span style="position: absolute; left:14px; bottom:10px;">
-							<i class="fa fa-comment"></i>20
-							<i class="fa fa-eye" style="margin-left:20px">30</i>
-						</span>
-                    </div>
                 </div>
 
             </div>

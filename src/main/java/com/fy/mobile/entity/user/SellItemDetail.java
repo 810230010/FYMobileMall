@@ -18,6 +18,8 @@ public class SellItemDetail {
     private Integer loveNo;
     private Integer commentNo;
     private String publishTime;
+    private Integer state;
+    private List<Message> messageList;
     public List<String> getImages(){
         String[] images = image.split(",");
         return Arrays.asList(images);

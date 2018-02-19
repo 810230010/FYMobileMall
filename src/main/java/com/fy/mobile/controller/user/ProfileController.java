@@ -3,6 +3,7 @@ package com.fy.mobile.controller.user;
 import com.fy.mobile.common.PageResult;
 import com.fy.mobile.entity.common.RestResult;
 import com.fy.mobile.entity.user.*;
+import com.fy.mobile.mapper.user.UserLoginMapper;
 import com.fy.mobile.service.user.UserLoginService;
 import com.fy.mobile.service.user.buy.BuyService;
 import com.fy.mobile.service.user.order.OrderService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -29,6 +31,8 @@ public class ProfileController {
     private BuyService buyService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserLoginMapper userLoginMapper;
     /**
      * 个人基本信息页面
      * @return
@@ -204,5 +208,20 @@ public class ProfileController {
         RestResult result = new RestResult();
         orderService.updateOrderState(2);
         return result.ok();
+    }
+    /**
+     * 卖家信息页面
+     */
+    @RequestMapping("/page/sellerInfo")
+    public String viewToSellerInfo(Integer userId, Model model){
+        Map map = userLoginService.getPersonAnalys(userId);
+        String nickname = userLoginMapper.getUserByUserId(userId).getNickname();
+        map.put("nickname", nickname);
+        List<IndexSellItem> list = sellService.listAllSellItemsByUserId(userId);
+        List<IndexBuyNeedDTO> buyNeedDTOS = buyService.listAllBuyNeedByUserId(userId);
+        model.addAttribute("seller", map);
+        model.addAttribute("sellItems", list);
+        model.addAttribute("buyNeeds", buyNeedDTOS);
+        return "/user/profile/seller_info";
     }
 }

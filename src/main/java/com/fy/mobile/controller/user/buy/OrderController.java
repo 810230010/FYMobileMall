@@ -2,6 +2,7 @@ package com.fy.mobile.controller.user.buy;
 
 import com.fy.mobile.entity.common.RestResult;
 import com.fy.mobile.entity.user.Address;
+import com.fy.mobile.entity.user.Message;
 import com.fy.mobile.entity.user.Order;
 import com.fy.mobile.entity.user.SellItemDetail;
 import com.fy.mobile.service.user.order.OrderService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -69,5 +71,27 @@ public class OrderController {
         orderService.addOrder(order);
         return result.ok();
     }
+    /**
+     * 添加需求留言
+     */
+    @RequestMapping(value = "/message", method = RequestMethod.POST)
+    @ResponseBody
+    public RestResult addOrderMessage(Message orderMessage){
+        RestResult result = new RestResult();
+        int affectedRow = orderService.addOrderMessage(orderMessage);
+        return result.ok();
+    }
 
+    /**
+     * 发布售后留言页面
+     * @param sellItemId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/page/leaveOrderMessage")
+    public String viewToLeaveOrderMessage(@RequestParam("itemId") Integer sellItemId, Model model){
+        SellItemDetail sellItemDetail = sellService.getSellItemDetail(sellItemId);
+        model.addAttribute("sellDetail", sellItemDetail);
+        return "/user/order/leave-order-message";
+    }
 }

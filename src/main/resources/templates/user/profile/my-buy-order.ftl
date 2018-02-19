@@ -75,6 +75,15 @@
                             '确认收货 <i class="fa fa-eye"></i>',
                             '</a>'
                         ].join('');
+                    }else if(row.stateCode == 1){
+                        return [
+                            '<a class="btn btn-primary btn-xs table-action btn-block detail" href="javascript:void(0)">',
+                            '查看详情 <i class="fa fa-eye"></i>',
+                            '</a>',
+                            '<a class="btn btn-primary btn-xs table-action btn-block leave_message" href="javascript:void(0)">',
+                            '售后留言 <i class="fa fa-eye"></i>',
+                            '</a>'
+                        ].join('');
                     }else{
                         return [
                             '<a class="btn btn-primary btn-xs table-action btn-block detail" href="javascript:void(0)">',
@@ -106,6 +115,12 @@
         var tr = $(this).closest('tr');
         var data = table.row(tr).data();
         window.location.href = "/profile/page/orderDetail?orderId=" + data.orderId;
+    });
+   // 售后留言
+    table.on( 'click', '.leave_message', function () {
+        var tr = $(this).closest('tr');
+        var data = table.row(tr).data();
+        window.location.href = "/order/page/leaveOrderMessage?itemId=" + data.sellItemId;
     });
     table.on( 'click', '.confirm', function () {
         var tr = $(this).closest('tr');

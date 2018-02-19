@@ -1,6 +1,9 @@
 package com.fy.mobile.controller.user;
 
+import com.fy.mobile.controller.user.sell.SellPublishDTO;
 import com.fy.mobile.entity.SearchResult;
+import com.fy.mobile.entity.user.BuyNeedDetail;
+import com.fy.mobile.entity.user.IndexSellItem;
 import com.fy.mobile.entity.user.UserLoginDTO;
 import com.fy.mobile.service.user.SearchService;
 import com.fy.mobile.service.user.buy.BuyService;
@@ -53,5 +56,25 @@ public class IndexController {
         List<SearchResult> searchResultList = searchService.getSearchResult(searchWord);
         model.addAttribute("searchResult", searchResultList);
         return "/user/search";
+    }
+    /**
+     * 更多闲置页面
+     */
+    @RequestMapping("/page/sell/more")
+    public String viewToMoreSell(Model model){
+        List<IndexSellItem> list = sellService.listAllSellItems();
+        model.addAttribute("sellItems", list);
+        return "/user/sell/all_sell_publishes";
+    }
+
+    /**
+     * 更多需求页面
+     * @return
+     */
+    @RequestMapping("/page/need/more")
+    public String viewToMoreBuyNeed(Model model){
+        List<BuyNeedDetail> list = buyService.listAllBuyNeed();
+        model.addAttribute("needList", list);
+        return "/user/buy/all_need_publishes";
     }
 }

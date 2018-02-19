@@ -11,6 +11,11 @@
         insert into fy_order(order_id, buy_user_id, buy_user_name, sell_item_id, sell_user_id, sell_user_name, create_time,pay_price, address_id)
         values (#{orderId}, #{buyUserId}, #{buyUserName}, #{sellItemId}, #{sellUserId}, #{sellUserName}, #{createTime}, #{payPrice}, #{addressId})
     </insert>
+    <!--添加售后留言-->
+    <insert id="insertOrderMessage">
+        insert into fy_message(message, message_type, message_publisher_id, message_publisher_name, need_sell_id, publish_time)
+        values (#{message}, #{messageType}, ${messagePublisherId}, #{messagePublisherName}, #{needSellId}, #{publishTime})
+    </insert>
     <!--修改订单状态-->
     <update id="updateOrderState">
         update fy_order set state = #{state}
@@ -23,7 +28,7 @@
     <!--获取我购买的所有订单-->
     <select id="listMyBuyOrder" resultType="com.fy.mobile.entity.user.OrderDetail">
         select a.order_id,
-        b.sell_id,
+        b.sell_id sellItemId,
         a.sell_user_id,
         a.sell_user_name,
         a.state stateCode,
@@ -78,5 +83,11 @@
         <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
             , ${orderColumn} ${orderType}
         </if>
+    </select>
+    <select id="getOrderMessage" resultType="com.fy.mobile.entity.user.Message">
+        select * from fy_message
+        where message_type = 1
+        and need_sell_id = #{needId}
+        order by publish_time desc;
     </select>
 </mapper>

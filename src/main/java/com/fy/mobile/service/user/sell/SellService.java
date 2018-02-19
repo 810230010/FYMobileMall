@@ -3,6 +3,7 @@ package com.fy.mobile.service.user.sell;
 import com.fy.mobile.common.GlobalConstant;
 import com.fy.mobile.controller.user.sell.SellPublishDTO;
 import com.fy.mobile.entity.user.*;
+import com.fy.mobile.mapper.user.OrderMapper;
 import com.fy.mobile.mapper.user.SellMapper;
 import com.fy.mobile.util.DateUtil;
 import com.fy.mobile.util.WebUtil;
@@ -21,6 +22,8 @@ public class SellService {
     private HttpServletRequest request;
     @Autowired
     private SellMapper sellMapper;
+    @Autowired
+    private OrderMapper orderMapper;
     /**
      * 添加闲置
      * @param sellPublishDTO
@@ -52,6 +55,8 @@ public class SellService {
     public SellItemDetail getSellItemDetail(Integer sellItemId) {
         SellItemDetail result = new SellItemDetail();
         result = sellMapper.getSellItemDetail(sellItemId);
+        List<Message> list = orderMapper.getOrderMessage(sellItemId);
+        result.setMessageList(list);
         return result;
     }
 
@@ -76,4 +81,20 @@ public class SellService {
         sellMapper.updateSellItemState(state);
     }
 
+    /**
+     * 获取所有闲置
+     * @return
+     */
+    public List<IndexSellItem> listAllSellItems() {
+        return sellMapper.listAllSellItems();
+    }
+
+    /**
+     * 获取某个用户的所有闲置
+     * @param userId
+     * @return
+     */
+    public List<IndexSellItem> listAllSellItemsByUserId(Integer userId) {
+        return sellMapper.listAllSellItemsByUserId(userId);
+    }
 }

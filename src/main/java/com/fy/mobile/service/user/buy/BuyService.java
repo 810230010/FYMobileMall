@@ -81,4 +81,21 @@ public class BuyService {
         PageHelper.startPage(page, pageSize);
         return buyMapper.listMyNeed(userId, orderColumn, orderType);
     }
+
+    /**
+     * 获取所有需求
+     * @return
+     */
+    public List<BuyNeedDetail> listAllBuyNeed() {
+        return buyMapper.listAllBuyNeed();
+    }
+
+    /**
+     * 获取某人所有需求
+     * @param userId
+     * @return
+     */
+    public List<IndexBuyNeedDTO> listAllBuyNeedByUserId(Integer userId) {
+        return buyMapper.listAllBuyNeedByUserId(userId);
+    }
 }

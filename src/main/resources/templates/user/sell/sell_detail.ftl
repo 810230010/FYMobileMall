@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="search-title" style="height: 60px;">
-        <h4>发布者：<a href="#">${sellDetail.publisherName}</a></h4>
+        <h4>发布者：<a href="/profile/page/sellerInfo?userId=${sellDetail.publisherId}">${sellDetail.publisherName}</a></h4>
         <p>发布于 ${sellDetail.publishTime}</p>
         <div class="divider-solid"></div>
     </div>
@@ -34,13 +34,32 @@
     <div class="divider-solid" style="margin-top: 20px"></div>
     <div class="buy" style="margin-top: 30px">
         <#if currentUser?exists>
-            <#if currentUser.userId != sellDetail.publisherId>
+            <#if (currentUser.userId != sellDetail.publisherId && sellDetail.state == 1)>
                 <button id="buy" class="btn btn-primary pull-right col-md-2">购买</button>
             </#if>
         </#if>
     </div>
-
+<#--售后留言-->
+    <#if sellDetail.state == 3>
+    <div class="divider-solid"></div>
+    <div class="comment-area" style="margin-top: 30px">
+        <h4 style="border-left: 5px solid #dd3333">售后留言区</h4>
+    </div>
+    <div class="clearfix"></div>
+    <div class="divider-solid" style="margin-top: 20px"></div>
+    <div class="padding" style="height:20px"></div>
+    <#list sellDetail.messageList as messageItem>
+        <div class="comment-item" style="position: relative;padding-bottom: 40px; padding-top: 40px;border-bottom: 1px solid silver">
+            <span style="position: absolute; left: 10px; top:10px;">
+                <a href="#">${messageItem.messagePublisherName}</a><span style="margin-left: 40px"><b>${messageItem.publishTime}</b></span>
+                <p style="margin-top: 10px">${messageItem.message}</p>
+            </span>
+        </div>
+    </#list>
+    </#if>
 </div>
+</div>
+
 <div class="clearfix"></div>
 <div class="padding" style="height: 300px;"></div>
 <div class="back-to-top">

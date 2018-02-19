@@ -61,5 +61,8 @@
         where buy_user_id = #{userId}
         and state = 1
     </select>
+    <select id="getUserByUserId" resultType="com.fy.mobile.entity.user.UserLoginDTO">
+        select * from fy_user where user_id = #{userId};
+    </select>
 
 </mapper>

@@ -39,4 +39,12 @@ public interface SellMapper {
      * @return
      */
     List<MySellItem> listMySellItems(@Param("userId") Integer userId, @Param("orderColumn") String orderColumn, @Param("orderType") String orderType);
+
+    /**
+     * 获取所有闲置
+     * @return
+     */
+    List<IndexSellItem> listAllSellItems();
+
+    List<IndexSellItem> listAllSellItemsByUserId(Integer userId);
 }

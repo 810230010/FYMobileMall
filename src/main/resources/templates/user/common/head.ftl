@@ -5,8 +5,8 @@
     </div>
     <div class="col-md-4 pull-left" id="navigation-wrapper" style="height:40px;line-height: 40px">
         <ul id="navigation">
-            <li class="item"><a href="#">所有闲置</a></li>
-            <li class="item"><a href="#">所有需求</a></li>
+            <li class="item"><a href="/page/sell/more">所有闲置</a></li>
+            <li class="item"><a href="/page/need/more">所有需求</a></li>
             <li class="item"><a data-toggle="modal" data-target="#mySellModal">发布闲置</a></li>
             <li class="item"><a href="#" data-toggle="modal" data-target="#myNeedModal">发布需求</a></li>
         </ul>

@@ -42,4 +42,25 @@
             , ${orderColumn} ${orderType}
         </if>
     </select>
+    <select id="listAllBuyNeed" resultType="com.fy.mobile.entity.user.BuyNeedDetail">
+       select need_id needId,
+        publisher_name publisherName,
+        publisher_id publisherId,
+        need_title needTitle,
+        comment_no commentNo,
+        publish_time publishTime
+        from fy_need_publish
+        ORDER BY needId
+    </select>
+    <select id="listAllBuyNeedByUserId" resultType="com.fy.mobile.entity.user.IndexBuyNeedDTO">
+         select need_id needId,
+        publisher_name publisherName,
+        publisher_id publisherId,
+        need_title title,
+        comment_no commentNo,
+        publish_time publishTime
+        from fy_need_publish
+        where publisher_id = #{userId}
+        ORDER BY publish_time
+    </select>
 </mapper>
