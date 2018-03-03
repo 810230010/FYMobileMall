@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fy.mobile.mapper.admin.AdminUserMapper">
+    <update id="changeUserState">
+        update fy_user
+        set state = #{state}
+        where user_id = #{userId}
+    </update>
+    <!--获取所有用户-->
+    <select id="listAllUser" resultType="com.fy.mobile.entity.user.UserDTO">
+        select * from fy_user
+        order by
+        user_type desc,user_id
+        <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+            , ${orderColumn} ${orderType}
+        </if>
+    </select>
+</mapper>

@@ -22,7 +22,7 @@
     <!--普通用户验证登录-->
     <select id="getUserByUsernameAndPassword" resultType="com.fy.mobile.entity.user.UserLoginDTO">
         select
-        user_id userId,nickname,tel,password
+        user_id userId,nickname,tel,password,state
         from fy_user
         where tel = #{tel} and password = #{password} and user_type = 0 limit 1;
     </select>

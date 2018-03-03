@@ -5,6 +5,7 @@ import com.fy.mobile.service.admin.AdminLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 管理员登录模块controller
@@ -30,8 +31,18 @@ public class AdminLoginController {
      * @return
      */
     @RequestMapping("/checkLogin")
+    @ResponseBody
     public Object checkLogin(String username, String password){
         RestResult result = new RestResult();
         return adminLoginService.checkLogin(username, password);
+    }
+
+    /**
+     * 后台首页
+     * @return
+     */
+    @RequestMapping("/page/index")
+    public String viewToAdminIndex(){
+        return "/admin/index";
     }
 }

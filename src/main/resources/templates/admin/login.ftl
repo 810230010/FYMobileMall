@@ -57,7 +57,7 @@
                 if(result.code == 0){
                     alert("登录成功!");
                     setTimeout(function () {
-                        window.location.reload();
+                        window.location.href = "/admin/page/index";
                     }, 2000);
                 }else{
                     alert(result.msg);

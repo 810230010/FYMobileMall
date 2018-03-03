@@ -41,9 +41,11 @@ public class UserLoginController {
     public RestResult checkResult(UserLoginDTO userLoginDTO){
         RestResult result = new RestResult();
         UserLoginDTO check = userLoginService.checkUserlogin(userLoginDTO);
-        if(check != null){
+        if(check != null && check.getState() != 0){
             WebUtil.storeLoginedUser(request, check);
             return result.ok("登陆成功",  check.getNickname());
+        }else if(check != null && check.getState() == 0){
+            return result.error("该用户已被限制，请联系管理员!");
         }
         return result.error("登录失败，用户名或密码出错!");
     }

@@ -8,4 +8,5 @@ public class UserLoginDTO {
     private String tel;
     private String password;
     private String nickname;
+    private Integer state;
 }
