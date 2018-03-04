@@ -8,6 +8,7 @@
     </insert>
     <update id="updateSellItemState">
         update fy_sell_publish set state = #{state}
+        where sell_id = #{sellId}
     </update>
     <select id="listTop8SellItem" resultType="com.fy.mobile.entity.user.IndexSellItem">
         select sell_id,

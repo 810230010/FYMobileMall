@@ -77,8 +77,8 @@ public class SellService {
         return sellMapper.listMySellItems(loginDTO.getUserId(), orderColumn, orderType);
     }
 
-    public void updateSellItemState(int state) {
-        sellMapper.updateSellItemState(state);
+    public void updateSellItemState(Integer sellId, int state) {
+        sellMapper.updateSellItemState(sellId, state);
     }
 
     /**

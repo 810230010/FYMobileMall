@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>管理用户页面</title>
+    <title>查看公告</title>
 
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/bootstrap.css" rel="stylesheet">
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -39,9 +39,10 @@
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
-                    <div class="dropdown profile-element"> <span>
+                    <div class="dropdown profile-element">
+                        <span>
                             <img alt="image" class="img-circle" src="${springMacroRequestContext.contextPath}/img/profile_small.jpg" />
-                             </span>
+                        </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="/admin/page/index">
                         <#if currentUser??>
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">${currentUser.nickname}</strong>
@@ -203,7 +204,7 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>用户列表</h2>
+                <h2>公告</h2>
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -211,7 +212,7 @@
                 <div class="col-lg-12">
                     <div class="ibox">
                         <div class="ibox-title">
-                            <h5 id="rank">所有用户 </h5>
+                            <a class="btn btn-primary" id="addNoticeBtn" data-toggle="modal" data-target="#addNoticeModal">添加公告</a>
                             <a id="back" hidden="hidden"> <i class="fa fa-reply" style="color: #777777"></i></a>
                         </div>
                         <div class="ibox-content">
@@ -224,6 +225,54 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--添加公告-->
+        <div class="modal fade" id="addNoticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">添加公告页面</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" onsubmit="return false">
+                            <div class="form-group">
+                                <label for="sell-description" class="control-label col-md-2">公告内容</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" id="noticeContent" style="height:200px"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-block" id="submit">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--修改公告-->
+        <div class="modal fade" id="updateNoticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">修改公告页面</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" onsubmit="return false">
+                            <div class="form-group">
+                                <label for="sell-description" class="control-label col-md-2">公告内容</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control" id="updateContent" style="height:200px"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-block" id="update">修改</button>
                     </div>
                 </div>
             </div>
@@ -243,9 +292,26 @@
 
 </body>
 <script>
+    $("#submit").click(function () {
+        var noticeContent = $("#noticeContent").val();
+        $.ajax({
+            url: "/admin/notice/addNotice",
+            data:{
+                noticeContent: noticeContent
+            },
+           success: function (result) {
+               if(result.code == 0){
+                   alert("添加公告成功");
+                   setTimeout(function () {
+                       window.location.reload();
+                   }, 2000);
+               }
+           }
+        })
+    })
     $('#datatable').DataTable({
         "ajax": {
-            'url': '/admin/user/listAllUser',
+            'url': '/admin/notice/listAllNotice',
             "data": function(d) {
                 var param = {};
                 param.page = d.start/d.length + 1;
@@ -257,29 +323,37 @@
             },
         },
         "columns": [
-            {"data":"userId","width":"7%","title":"","visible": false},
-            {"data":"nickname","width": "10%","title":"昵称","orderable": false},
-            {"data":"tel","width": "10%","title":"手机号码","orderable": false},
-            {"data":"createTime","width": "10%","title":"创建时间","orderable": false},
-            {"data":"stateString","width": "10%","title":"用户状态","orderable": false},
-            {"data":"userTypeString","width": "10%","title":"用户类型","orderable": false},
+            {"data":"noticeId","width":"7%","title":"","visible": false},
+            {"data":"noticeContent","width": "10%","title":"公告内容","orderable": false},
+            {"data":"adminName","width": "10%","title":"发布者","orderable": false},
+            {"data":"useString","width": "10%","title":"使用情况","orderable": false},
+            {"data":"publishTime","width": "10%","title":"发布时间","orderable": true},
+            {"data":"updateTime","width": "10%","title":"最新更新时间","orderable": true},
             {
-                "data":"userId",
+                "data":"noticeId",
                 "width": "8%",
                 "title":"操作",
                 "orderable": false,
                 "render": function (data, type, row) {
-                    if(row.userType == 1){
-                    }else if(row.userType == 0 && row.state == 1){
+                    if(row.isUsed == 0){
                         return [
-                            '<a class="btn btn-danger btn-xs table-action btn-block forbid" href="javascript:void(0)">',
-                            '拉黑 <i class="fa fa-eye"></i>',
-                            '</a>'
+                            '<a class="btn btn-primary btn-xs table-action btn-block update" data-toggle="modal" data-target="#updateNoticeModal">',
+                            '修改公告 <i class="fa fa-pencil"></i>',
+                            '</a>',
+                            '<a class="btn btn-success btn-xs table-action btn-block use" href="javascript:void(0)">',
+                            '使用公告 <i class="fa fa-check"></i>',
+                            '</a>',
+                            '<a class="btn btn-danger btn-xs table-action btn-block delete" href="javascript:void(0)">',
+                            '删除公告 <i class="fa fa-times"></i>',
+                            '</a>',
                         ].join('');
-                    }else if(row.userType == 0 && row.state == 0){
+                    }else{
                         return [
-                            '<a class="btn btn-warning btn-xs table-action btn-block recover" href="javascript:void(0)">',
-                            '恢复可用 <i class="fa fa-eye"></i>',
+                            '<a class="btn btn-primary btn-xs table-action btn-block update" data-toggle="modal" data-target="#updateNoticeModal">',
+                            '修改公告 <i class="fa fa-pencil"></i>',
+                            '</a>',
+                            '<a class="btn btn-danger btn-xs table-action btn-block delete" href="javascript:void(0)">',
+                            '删除公告 <i class="fa fa-times"></i>',
                             '</a>'
                         ].join('');
                     }
@@ -304,40 +378,42 @@
     });
     $.fn.dataTable.ext.errMode = 'none'; //不显示任何错误信息
     var table = $('#datatable').DataTable();
-    // 拉黑用户
-    table.on( 'click', '.forbid', function () {
+    // 修改公告
+    table.on( 'click', '.update', function () {
         var tr = $(this).closest('tr');
         var data = table.row(tr).data();
-        $.ajax({
-            url: "/admin/user/forbidUser",
-            data: {
-                userId: data.userId
-            },
-            success: function (result) {
-                if(result.code == 0){
-                    layer.msg("拉黑该用户成功!");
-                    setTimeout(function () {
-                        window.location.reload();
-                    },1500)
+        $("#updateContent").val(data.noticeContent);
+        $("#update").click(function () {
+            var noticeContent = $("#updateContent").val();
+            $.ajax({
+                url: "/admin/notice/updateNotice",
+                data:{
+                    noticeId: data.noticeId,
+                    noticeContent: noticeContent
+                },
+                success: function (result) {
+                    if(result.code == 0){
+                        alert("修改公告成功");
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 2000);
+                    }
                 }
-            },
-            error: function (result) {
-                alert("服务出错!")
-            }
+            })
         })
     });
-    //恢复用户
-    table.on( 'click', '.recover', function () {
+    //使用公告
+    table.on( 'click', '.use', function () {
         var tr = $(this).closest('tr');
         var data = table.row(tr).data();
         $.ajax({
-            url: "/admin/user/recoverUser",
+            url: "/admin/notice/useNotice",
             data: {
-                userId: data.userId
+                noticeId: data.noticeId
             },
             success: function (result) {
                 if(result.code == 0){
-                    layer.msg("恢复用户成功!");
+                    swal("成功！", "该公告首页已生效！","success");
                     setTimeout(function () {
                         window.location.reload();
                     }, 1500)
@@ -347,6 +423,44 @@
                 alert("服务出错")
             }
         })
+
+    });
+    //删除公告
+    table.on( 'click', '.delete', function () {
+
+        var tr = $(this).closest('tr');
+        var data = table.row(tr).data();
+        swal({
+                    title: "确定删除吗？",
+                    text: "你将无法恢复该公告！",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确定删除！",
+                    closeOnConfirm: false
+                },
+                function(){
+                    $.ajax({
+                        url: "/admin/notice/deleteNotice",
+                        data: {
+                            noticeId: data.noticeId
+                        },
+                        success: function (result) {
+
+                            if(result.code == 0){
+                                swal("成功！", "该公告已删除！","success");
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1500)
+                            }
+                        },
+                        error: function(result){
+                            alert("服务出错")
+                        }
+                    })
+                }
+        );
+
 
     });
 

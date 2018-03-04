@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fy.mobile.mapper.admin.AdminNoticeMapper">
+    <insert id="insertNotice">
+        insert into fy_notice(notice_content, publish_time, admin_name, update_time)
+        VALUES (#{noticeContent}, #{publishTime}, #{adminName}, #{updateTime});
+    </insert>
+    <!--修改公告-->
+    <update id="updateNotice">
+        update fy_notice
+        set notice_content = #{noticeContent},
+        update_time = #{updateTime}
+        where notice_id = #{noticeId}
+    </update>
+    <!--改变公告使用状态-->
+    <update id="changeNoticeUseState">
+        update fy_notice
+        <if test="state == null">
+            set is_used = 0
+        </if>
+        <if test="state != null">
+            set is_used = #{state}
+        </if>
+        <if test="state == null">
+            where notice_id != #{noticeId}
+        </if>
+        <if test="state != null">
+            where notice_id = #{noticeId}
+        </if>
+    </update>
+    <delete id="deleteNoticeById">
+        delete from fy_notice
+        where notice_id = #{noticeId}
+    </delete>
+    <!--获取所有公告-->
+    <select id="listAllNotice" resultType="com.fy.mobile.entity.NoticeDTO">
+        select * from fy_notice
+        order by is_used desc, notice_id desc
+        <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+            , ${orderColumn} ${orderType}
+        </if>
+    </select>
+</mapper>

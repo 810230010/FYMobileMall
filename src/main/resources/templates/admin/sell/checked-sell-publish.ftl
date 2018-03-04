@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>后台首页</title>
+    <title>已审核闲置</title>
 
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/bootstrap.css" rel="stylesheet">
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -42,18 +42,13 @@
                     <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" src="${springMacroRequestContext.contextPath}/img/profile_small.jpg" />
                              </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear">
-                                <span class="block m-t-xs">
-                                    <#if currentUser??>
-                                        <strong class="font-bold">${currentUser.nickname}</strong>
-                                        <#else>
-                                            <strong class="font-bold">未登录</strong>
-                                    </#if>
-                                </span>
-                                <span class="text-muted text-xs block">操作<b class="caret"></b></span>
-                            </span>
-                        </a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="/admin/page/index">
+                        <#if currentUser??>
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">${currentUser.nickname}</strong>
+                        <#else>
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">未登陆</strong>
+                        </#if>
+                        </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span> </span> </a>
                     <#if (currentUser.nickname)??>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="/admin/logout">退出</a></li>
@@ -206,13 +201,31 @@
 
             </nav>
         </div>
-        <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>已审核闲置</h2>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-12 text-center" style="margin-top:300px"><h1>飞扬后台管理系统!</h1></div>
-
-                <div class="col-lg-12" style="height:40px"></div>
-
-
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5 id="rank">已审核闲置列表 </h5>
+                            <a id="back" hidden="hidden"> <i class="fa fa-reply" style="color: #777777"></i></a>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="table-responsive">
+                                <table id="datatable" class="table table-striped table-bordered table-hover dataTables-example" >
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer">
@@ -230,8 +243,72 @@
 
 </body>
 <script>
+    $('#datatable').DataTable({
+        "ajax": {
+            'url': '/admin/sell/listCheckedSellItem',
+            "data": function(d) {
+                var param = {};
+                param.page = d.start/d.length + 1;
+                param.pageSize = d.length;
+                param.draw = d.draw;
+                param.orderColumn = d.columns[d.order[0]['column']]['data'];
+                param.orderType = d.order[0]['dir'];
+                return param;
+            },
+        },
+        "columns": [
+            {"data":"sellId","width":"7%","title":"","visible": false},
+            {"data":"sellTitle","width": "10%","title":"闲置标题","orderable": false},
+            {"data":"oneImage","width": "10%","title":"图片","orderable": false,
+                "render": function (data, type, row) {
+                    var html = '<div class="pull-left"><img src="' + row.oneImage + '" style="width: 60px;height: 60px;"></div>';
+                    return html;
+                }
+            },
+            {"data":"formattedPrice","width": "10%","title":"价格","orderable": false},
+            {"data":"publisherName","width": "10%","title":"发布人","orderable": false},
+            {"data":"publishTime","width": "10%","title":"发布时间","orderable": true},
+            {"data":"stateString","width": "10%","title":"状态","orderable": true},
+            {
+                "data":"sellId",
+                "width": "8%",
+                "title":"操作",
+                "orderable": false,
+                "render": function (data, type, row) {
+                        return [
+                            '<a class="btn btn-primary btn-xs table-action btn-block detail" href="javascript:void(0)">',
+                            '查看详情 <i class="fa fa-eye"></i>',
+                            '</a>'
+                        ].join('');
+                }
+            },
+        ],
+        "searching": false,
+        "ordering":true,
+        "serverSide": true,
+        "deferRender": true,
+        "processing": true,
+        "autoWidth": false,
+        "destroy": true,
+        "lengthMenu": [ 5, 10, 15],
+        "responsive": true,
+        "dom": '<"html5buttons"B>lTfgitp',
+        "buttons": [],
+        "language": {
+            "url": "${springMacroRequestContext.contextPath}/js/dataTables/Chinese.json",
+        }
+    });
+    $.fn.dataTable.ext.errMode = 'none'; //不显示任何错误信息
+    var table = $('#datatable').DataTable();
+    // 查看闲置详情
+    table.on( 'click', '.detail', function () {
+        var tr = $(this).closest('tr');
+        var data = table.row(tr).data();
+        window.location.href = "/admin/sell/page/sellDetail?sellId=" + data.sellId;
+    });
 
-</script>
+
+
 
 </script>
 </html>

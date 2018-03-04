@@ -97,7 +97,7 @@ public class ProfileController {
     @ResponseBody
     public Object closeSellItem(Integer sellId){
         RestResult result = new RestResult();
-        sellService.updateSellItemState(4);
+        sellService.updateSellItemState(sellId, 4);
         return result.ok();
     }
 

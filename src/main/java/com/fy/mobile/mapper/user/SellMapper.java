@@ -31,7 +31,7 @@ public interface SellMapper {
      */
     SellItemDetail getSellItemDetail(Integer sellItemId);
 
-    void updateSellItemState(Integer state);
+    void updateSellItemState(@Param("sellId") Integer sellId, @Param("state") Integer state);
 
     /**
      * 获取我的所有闲置

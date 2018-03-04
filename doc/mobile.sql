@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : test_space
-Source Server Version : 50528
+Source Server         : jjp
+Source Server Version : 50540
 Source Host           : localhost:3306
 Source Database       : mobile
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2018-03-02 19:30:56
+Date: 2018-03-04 23:38:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -81,6 +81,26 @@ CREATE TABLE `fy_need_publish` (
 INSERT INTO `fy_need_publish` VALUES ('4', '1', 'Bonjour', '求一部肾10啊', '<p>哪位好心人，卖个便宜的苹果x.<img src=\"http://p3cv1ndf7.bkt.clouddn.com/1513667969(1).jpg\" style=\"max-width: 100%;\"></p><p><br></p>', '1', '1', '2018-01-31 15:31:12', null);
 
 -- ----------------------------
+-- Table structure for `fy_notice`
+-- ----------------------------
+DROP TABLE IF EXISTS `fy_notice`;
+CREATE TABLE `fy_notice` (
+  `notice_id` int(11) NOT NULL AUTO_INCREMENT,
+  `notice_content` varchar(1024) DEFAULT NULL,
+  `publish_time` varchar(20) DEFAULT '',
+  `admin_name` varchar(20) DEFAULT NULL,
+  `is_used` tinyint(1) DEFAULT '0' COMMENT '是否正在被使用',
+  `update_time` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`notice_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fy_notice
+-- ----------------------------
+INSERT INTO `fy_notice` VALUES ('1', '欢迎欢迎啊', '2018-03-01 22:20:20', 'admin', '0', '2018-03-04 23:33:38');
+INSERT INTO `fy_notice` VALUES ('2', '欢迎欢迎啊啊啊啊啊', '2018-03-04 22:37:10', 'admin', '1', '2018-03-04 23:34:28');
+
+-- ----------------------------
 -- Table structure for `fy_order`
 -- ----------------------------
 DROP TABLE IF EXISTS `fy_order`;
@@ -144,12 +164,13 @@ CREATE TABLE `fy_user` (
   `user_type` tinyint(1) DEFAULT '0' COMMENT '0:普通用户 1:管理员',
   `state` tinyint(4) DEFAULT '1' COMMENT '0:无效   1：有效  ',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fy_user
 -- ----------------------------
-INSERT INTO `fy_user` VALUES ('1', 'Bonjour', '17858936109', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '2018-01-30', null, '0', null);
+INSERT INTO `fy_user` VALUES ('1', 'Bonjour', '17858936109', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '2018-01-30', null, '0', '1');
+INSERT INTO `fy_user` VALUES ('2', 'admin', '123', '123', '2018-01-30', null, '1', '1');
 DROP TRIGGER IF EXISTS `addComment`;
 DELIMITER ;;
 CREATE TRIGGER `addComment` AFTER INSERT ON `fy_message` FOR EACH ROW if new.message_type=0 then

@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>后台首页</title>
+    <title>闲置详情</title>
 
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/bootstrap.css" rel="stylesheet">
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -42,18 +42,13 @@
                     <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" src="${springMacroRequestContext.contextPath}/img/profile_small.jpg" />
                              </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear">
-                                <span class="block m-t-xs">
-                                    <#if currentUser??>
-                                        <strong class="font-bold">${currentUser.nickname}</strong>
-                                        <#else>
-                                            <strong class="font-bold">未登录</strong>
-                                    </#if>
-                                </span>
-                                <span class="text-muted text-xs block">操作<b class="caret"></b></span>
-                            </span>
-                        </a>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="/admin/page/index">
+                        <#if currentUser??>
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">${currentUser.nickname}</strong>
+                        <#else>
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">未登陆</strong>
+                        </#if>
+                        </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span> </span> </a>
                     <#if (currentUser.nickname)??>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a href="/admin/logout">退出</a></li>
@@ -206,13 +201,72 @@
 
             </nav>
         </div>
-        <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>闲置详情</h2>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-12 text-center" style="margin-top:300px"><h1>飞扬后台管理系统!</h1></div>
-
-                <div class="col-lg-12" style="height:40px"></div>
-
-
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5 id="rank">闲置详情 </h5>
+                            <a id="back" hidden="hidden"> <i class="fa fa-reply" style="color: #777777"></i></a>
+                        </div>
+                        <div class="ibox-content">
+                            <form class="form-horizontal" onsubmit="return false">
+                                <div class="form-group">
+                                    <label for="sell-title" class="col-md-2 control-label text-center">标题</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" value="${sellDetail.sellTitle}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sell-title" class="col-md-2 control-label text-center">发布者</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" value="${sellDetail.publisherName}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sell-title" class="col-md-2 control-label text-center">联系电话</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" value="${sellDetail.tel}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label text-center">图片</label>
+                                    <div class="col-md-10">
+                                        <!--用来存放item-->
+                                        <#list sellDetail.images as imageItem>
+                                            <div id="fileList" class="col-md-2">
+                                                <img src="${imageItem}" style="width:100px; height:100px"/>
+                                            </div>
+                                        </#list>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sell-description" class="control-label col-md-2">描述</label>
+                                    <div class="col-md-10">
+                                        <p>${sellDetail.sellDescription}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sell-price" class="control-label col-md-2">出价</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" value="${sellDetail.formattedPrice}" readonly/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sell-price" class="control-label col-md-2">发布日期</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" value="${sellDetail.publishTime}" readonly/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer">
@@ -223,15 +277,5 @@
 
     </div>
 </div>
-
-
-
-
-
 </body>
-<script>
-
-</script>
-
-</script>
 </html>

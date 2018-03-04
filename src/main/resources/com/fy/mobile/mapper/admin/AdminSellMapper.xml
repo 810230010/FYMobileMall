@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fy.mobile.mapper.admin.AdminSellMapper">
+    <!--获取未审核闲置-->
+    <select id="listUncheckSellItem" resultType="com.fy.mobile.entity.user.SellItemDetail">
+        select sell_id,
+        publisher_name,
+        publisher_id,
+        sell_title,
+        image,
+        sell_description,
+        sell_price,
+        publish_time
+        from fy_sell_publish
+        where state = 2
+        order by sell_id
+        <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+            , ${orderColumn} ${orderType}
+        </if>
+    </select>
+    <!--获取闲置详情-->
+    <select id="getSellItemDetail" resultType="com.fy.mobile.entity.user.SellItemDetail">
+         select a.sell_id,
+        a.publisher_name,
+        a.publisher_id,
+        a.sell_title,
+        a.image,
+        a.sell_description,
+        a.sell_price,
+        a.publish_time,
+        b.tel
+        from fy_sell_publish a left join fy_user b
+        on a.publisher_id = b.user_id
+        where a.sell_id = #{sellId}
+    </select>
+    <select id="listCheckedSellItem" resultType="com.fy.mobile.entity.user.SellItemDetail">
+        select sell_id,
+        publisher_name,
+        publisher_id,
+        sell_title,
+        image,
+        sell_description,
+        sell_price,
+        publish_time,
+        state
+        from fy_sell_publish
+        where state != 2
+        order by state,sell_id
+        <if test="orderColumn != null and orderColumn !='' and orderType != null and orderType != '' ">
+            , ${orderColumn} ${orderType}
+        </if>
+    </select>
+</mapper>

@@ -68,7 +68,7 @@ public class OrderService {
         order.setBuyUserName(buyerName);
         int row = orderMapper.insertOrder(order);
         //改变商品状态为已有人下单
-        sellMapper.updateSellItemState(3);
+        sellMapper.updateSellItemState(order.getSellItemId(), 3);
     }
 
     /**
