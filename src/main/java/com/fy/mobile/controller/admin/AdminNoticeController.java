@@ -105,4 +105,5 @@ public class AdminNoticeController {
         adminNoticeService.deleteNotice(noticeId);
         return result.ok();
     }
+
 }

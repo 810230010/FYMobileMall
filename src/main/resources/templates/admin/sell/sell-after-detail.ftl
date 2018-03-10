@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>查看公告</title>
+    <title>闲置详情</title>
 
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/bootstrap.css" rel="stylesheet">
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -39,10 +39,9 @@
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
-                    <div class="dropdown profile-element">
-                        <span>
+                    <div class="dropdown profile-element"> <span>
                             <img alt="image" class="img-circle" src="${springMacroRequestContext.contextPath}/img/profile_small.jpg" />
-                        </span>
+                             </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="/admin/page/index">
                         <#if currentUser??>
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">${currentUser.nickname}</strong>
@@ -52,11 +51,11 @@
                         </span> <span class="text-muted text-xs block">操作 <b class="caret"></b></span> </span> </a>
                     <#if (currentUser.nickname)??>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="/admin/logout">退出</a></li>
+                            <li><a href="/admin/login/logout">退出</a></li>
                         </ul>
                     <#else>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="/admin/login/logout">退出</a></li>
+                            <li><a href="/admin/login">登陆</a></li>
                         </ul>
                     </#if>
                     </div>
@@ -202,266 +201,63 @@
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>公告</h2>
+                <h2>闲置详情</h2>
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox">
-                        <div class="ibox-title">
-                            <a class="btn btn-primary" id="addNoticeBtn" data-toggle="modal" data-target="#addNoticeModal">添加公告</a>
-                            <a id="back" hidden="hidden"> <i class="fa fa-reply" style="color: #777777"></i></a>
+                <div class="container">
+                    <div class="search-title" style="height: 60px;">
+                        <h4>发布者：<a href="/profile/page/sellerInfo?userId=${sellDetail.publisherId}">${sellDetail.publisherName}</a></h4>
+                        <p>发布于: ${sellDetail.publishTime}</p>
+                        <p>联系电话: ${sellDetail.tel}</p>
+                        <div class="hr-line-dashed"></div>
+                    </div>
+                    <div style="width: 70%; margin: 0 auto;margin-top: 40px;">
+                        <h3 class="text-center">${sellDetail.sellTitle}<span style="color:red;float:right">¥${sellDetail.sellPrice}</span></h3>
+                        <div class="hr-line-dashed"></div>
+                        <div class="need-desc" style="margin-top: 40px;">
+                        ${sellDetail.sellDescription}
                         </div>
-                        <div class="ibox-content">
-                            <div class="table-responsive">
-                                <table id="datatable" class="table table-striped table-bordered table-hover dataTables-example" >
-                                    <thead>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                        <div class="padding" style="height: 50px;"></div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="comment-area" style="margin-top: 30px">
+                        <h4 style="border-left: 5px solid #dd3333">商品图片</h4>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="item-pictures" style="margin-top: 20px">
+                        <div class="col-md-1">
+                        <#list sellDetail.images as image>
+                            <div class="col-md-1">
+                                <img src="${image}" alt="商品图片" style=" height: 100px"/>
                             </div>
+                        </#list>
                         </div>
                     </div>
-                </div>
+                    <div class="clearfix"></div>
+                    <div class="hr-line-dashed" style="margin-top: 20px"></div>
+                <#--售后留言-->
+                    <div class="hr-line-dashed"></div>
+                    <div class="comment-area" style="margin-top: 30px">
+                        <h4 style="border-left: 5px solid #dd3333">售后留言区</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="hr-line-dashed" style="margin-top: 20px"></div>
+                    <div class="padding" style="height:20px"></div>
+                    <#list sellDetail.messageList as messageItem>
+                        <div class="comment-item" style="position: relative;padding-bottom: 40px; padding-top: 40px;border-bottom: 1px solid silver">
+                            <span style="position: absolute; left: 10px; top:10px;">
+                                <a href="#">${messageItem.messagePublisherName}</a><span style="margin-left: 40px"><b>${messageItem.publishTime}</b></span>
+                                <p style="margin-top: 10px">${messageItem.message}</p>
+                            </span>
+                        </div>
+                    </#list>
+                  </div>
+               </div>
             </div>
+             <div class="padding" style="height:400px"></div>
         </div>
-        <!--添加公告-->
-        <div class="modal fade" id="addNoticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">添加公告页面</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" onsubmit="return false">
-                            <div class="form-group">
-                                <label for="sell-description" class="control-label col-md-2">公告内容</label>
-                                <div class="col-md-10">
-                                    <textarea class="form-control" id="noticeContent" style="height:200px"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-block" id="submit">提交</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--修改公告-->
-        <div class="modal fade" id="updateNoticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">修改公告页面</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" onsubmit="return false">
-                            <div class="form-group">
-                                <label for="sell-description" class="control-label col-md-2">公告内容</label>
-                                <div class="col-md-10">
-                                    <textarea class="form-control" id="updateContent" style="height:200px"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-block" id="update">修改</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2017
-            </div>
-        </div>
-
-    </div>
 </div>
-
-
-
-
-
 </body>
-<script>
-    $("#submit").click(function () {
-        var noticeContent = $("#noticeContent").val();
-        $.ajax({
-            url: "/admin/notice/addNotice",
-            data:{
-                noticeContent: noticeContent
-            },
-           success: function (result) {
-               if(result.code == 0){
-                   alert("添加公告成功");
-                   setTimeout(function () {
-                       window.location.reload();
-                   }, 2000);
-               }
-           }
-        })
-    })
-    $('#datatable').DataTable({
-        "ajax": {
-            'url': '/admin/notice/listAllNotice',
-            "data": function(d) {
-                var param = {};
-                param.page = d.start/d.length + 1;
-                param.pageSize = d.length;
-                param.draw = d.draw;
-                param.orderColumn = d.columns[d.order[0]['column']]['data'];
-                param.orderType = d.order[0]['dir'];
-                return param;
-            },
-        },
-        "columns": [
-            {"data":"noticeId","width":"7%","title":"","visible": false},
-            {"data":"noticeContent","width": "10%","title":"公告内容","orderable": false},
-            {"data":"adminName","width": "10%","title":"发布者","orderable": false},
-            {"data":"useString","width": "10%","title":"使用情况","orderable": false},
-            {"data":"publishTime","width": "10%","title":"发布时间","orderable": true},
-            {"data":"updateTime","width": "10%","title":"最新更新时间","orderable": true},
-            {
-                "data":"noticeId",
-                "width": "8%",
-                "title":"操作",
-                "orderable": false,
-                "render": function (data, type, row) {
-                    if(row.isUsed == 0){
-                        return [
-                            '<a class="btn btn-primary btn-xs table-action btn-block update" data-toggle="modal" data-target="#updateNoticeModal">',
-                            '修改公告 <i class="fa fa-pencil"></i>',
-                            '</a>',
-                            '<a class="btn btn-success btn-xs table-action btn-block use" href="javascript:void(0)">',
-                            '使用公告 <i class="fa fa-check"></i>',
-                            '</a>',
-                            '<a class="btn btn-danger btn-xs table-action btn-block delete" href="javascript:void(0)">',
-                            '删除公告 <i class="fa fa-times"></i>',
-                            '</a>',
-                        ].join('');
-                    }else{
-                        return [
-                            '<a class="btn btn-primary btn-xs table-action btn-block update" data-toggle="modal" data-target="#updateNoticeModal">',
-                            '修改公告 <i class="fa fa-pencil"></i>',
-                            '</a>',
-                            '<a class="btn btn-danger btn-xs table-action btn-block delete" href="javascript:void(0)">',
-                            '删除公告 <i class="fa fa-times"></i>',
-                            '</a>'
-                        ].join('');
-                    }
-
-                }
-            },
-        ],
-        "searching": false,
-        "ordering":true,
-        "serverSide": true,
-        "deferRender": true,
-        "processing": true,
-        "autoWidth": false,
-        "destroy": true,
-        "lengthMenu": [ 5, 10, 15],
-        "responsive": true,
-        "dom": '<"html5buttons"B>lTfgitp',
-        "buttons": [],
-        "language": {
-            "url": "${springMacroRequestContext.contextPath}/js/dataTables/Chinese.json",
-        }
-    });
-    $.fn.dataTable.ext.errMode = 'none'; //不显示任何错误信息
-    var table = $('#datatable').DataTable();
-    // 修改公告
-    table.on( 'click', '.update', function () {
-        var tr = $(this).closest('tr');
-        var data = table.row(tr).data();
-        $("#updateContent").val(data.noticeContent);
-        $("#update").click(function () {
-            var noticeContent = $("#updateContent").val();
-            $.ajax({
-                url: "/admin/notice/updateNotice",
-                data:{
-                    noticeId: data.noticeId,
-                    noticeContent: noticeContent
-                },
-                success: function (result) {
-                    if(result.code == 0){
-                        alert("修改公告成功");
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 2000);
-                    }
-                }
-            })
-        })
-    });
-    //使用公告
-    table.on( 'click', '.use', function () {
-        var tr = $(this).closest('tr');
-        var data = table.row(tr).data();
-        $.ajax({
-            url: "/admin/notice/useNotice",
-            data: {
-                noticeId: data.noticeId
-            },
-            success: function (result) {
-                if(result.code == 0){
-                    swal("成功！", "该公告首页已生效！","success");
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1500)
-                }
-            },
-            error: function(result){
-                alert("服务出错")
-            }
-        })
-
-    });
-    //删除公告
-    table.on( 'click', '.delete', function () {
-
-        var tr = $(this).closest('tr');
-        var data = table.row(tr).data();
-        swal({
-                    title: "确定删除吗？",
-                    text: "你将无法恢复该公告！",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "确定删除！",
-                    closeOnConfirm: false
-                },
-                function(){
-                    $.ajax({
-                        url: "/admin/notice/deleteNotice",
-                        data: {
-                            noticeId: data.noticeId
-                        },
-                        success: function (result) {
-
-                            if(result.code == 0){
-                                swal("成功！", "该公告已删除！","success");
-                                setTimeout(function () {
-                                    window.location.reload();
-                                }, 1500)
-                            }
-                        },
-                        error: function(result){
-                            alert("服务出错")
-                        }
-                    })
-                }
-        );
-
-
-    });
-
-
-</script>
 </html>

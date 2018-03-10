@@ -22,7 +22,8 @@
         limit 8;
     </select>
     <select id="getSellItemDetail" resultType="com.fy.mobile.entity.user.SellItemDetail">
-        select * from fy_sell_publish;
+        select t1.*, t2.tel from fy_sell_publish t1 left join fy_user t2
+        on t1.publisher_id = t2.user_id;
     </select>
     <!--获取我的所有闲置-->
     <select id="listMySellItems" resultType="com.fy.mobile.entity.user.MySellItem">

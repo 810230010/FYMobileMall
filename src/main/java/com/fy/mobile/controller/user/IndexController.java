@@ -1,10 +1,13 @@
 package com.fy.mobile.controller.user;
 
+import com.fy.mobile.controller.admin.AdminNoticeController;
 import com.fy.mobile.controller.user.sell.SellPublishDTO;
 import com.fy.mobile.entity.SearchResult;
+import com.fy.mobile.entity.common.RestResult;
 import com.fy.mobile.entity.user.BuyNeedDetail;
 import com.fy.mobile.entity.user.IndexSellItem;
 import com.fy.mobile.entity.user.UserLoginDTO;
+import com.fy.mobile.service.admin.AdminNoticeService;
 import com.fy.mobile.service.user.SearchService;
 import com.fy.mobile.service.user.buy.BuyService;
 import com.fy.mobile.service.user.sell.SellService;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -33,6 +37,8 @@ public class IndexController {
     private SellService sellService;
     @Autowired
     private SearchService searchService;
+    @Autowired
+    private AdminNoticeService adminNoticeService;
     /**
      * 首页
      * @return
@@ -76,5 +82,15 @@ public class IndexController {
         List<BuyNeedDetail> list = buyService.listAllBuyNeed();
         model.addAttribute("needList", list);
         return "/user/buy/all_need_publishes";
+    }
+    /**
+     * 获取最新公告
+     */
+    @RequestMapping("getNotice")
+    @ResponseBody
+    public Object getLatesNotice(){
+        RestResult result = new RestResult();
+        String msg = adminNoticeService.getLatestNotice();
+        return result.ok(msg);
     }
 }

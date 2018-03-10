@@ -4,11 +4,12 @@
 <head>
     <link href="${springMacroRequestContext.contextPath}/css/bootstrap/bootstrap.css" rel="stylesheet"/>
     <link href="${springMacroRequestContext.contextPath}/css/animate/animate.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/bootstrap/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/bootstrap/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/buttons/buttons.css"/>
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/wang-editor/wangEditor.min.css">
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/webuploader/webuploader.css">
     <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/dataTables/datatables.min.css">
+    <link rel="stylesheet" href="${springMacroRequestContext.contextPath}/css/plugins/sweetalert/sweetalert.css">
     <!-- <link rel="stylesheet" href="css/semantic/semantic.css"> -->
     <script src="${springMacroRequestContext.contextPath}/js/jquery.min.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/bootstrap/bootstrap.js"></script>
@@ -22,6 +23,7 @@
     <script src="${springMacroRequestContext.contextPath}/js/plupload/plupload.full.min.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/plupload/zh_CN.js"></script>
     <script src="${springMacroRequestContext.contextPath}/js/webuploader/webuploader.js"></script>
+    <script src="${springMacroRequestContext.contextPath}/js/plugins/sweetalert/sweetalert.min.js"></script>
 </head>
 <style type="text/css">
     .blur {

@@ -40,4 +40,9 @@
             , ${orderColumn} ${orderType}
         </if>
     </select>
+    <select id="getLatestNotice" resultType="java.lang.String">
+        select notice_content
+        from fy_notice
+        where is_used = 1;
+    </select>
 </mapper>

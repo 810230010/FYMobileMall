@@ -56,7 +56,7 @@
                         </a>
                     <#if (currentUser.nickname)??>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="/admin/logout">退出</a></li>
+                            <li><a href="/admin/login/logout">退出</a></li>
                         </ul>
                     <#else>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -82,11 +82,9 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="css_animation.html#"><i class="fa fa-sitemap"></i> <span class="nav-label">订单管理</span><span class="fa arrow"></span></a>
+                    <a href="css_animation.html#"><i class="fa fa-sitemap"></i> <span class="nav-label">售后管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="css_animation.html#">已成交订单</a></li>
-                        <li><a href="css_animation.html#">未成交订单</a></li>
-                        <li><a href="css_animation.html#">售后处理</a></li>
+                        <li><a href="/admin/sell/page/dealSellAfter">售后处理</a></li>
                     </ul>
                 </li>
                 <li>

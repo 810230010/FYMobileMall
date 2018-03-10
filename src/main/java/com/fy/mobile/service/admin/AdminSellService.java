@@ -1,5 +1,6 @@
 package com.fy.mobile.service.admin;
 
+import com.fy.mobile.entity.SellAfterItem;
 import com.fy.mobile.entity.user.SellItemDetail;
 import com.fy.mobile.mapper.admin.AdminSellMapper;
 import com.github.pagehelper.PageHelper;
@@ -41,5 +42,22 @@ public class AdminSellService {
     public List<SellItemDetail> listCheckedSellItem(Integer page, Integer pageSize, String orderColumn, String orderType) {
         PageHelper.startPage(page, pageSize);
         return adminSellMapper.listCheckedSellItem(orderColumn, orderType);
+    }
+
+    /**
+     * 售后留言列表
+     * @param page
+     * @param pageSize
+     * @param orderColumn
+     * @param orderType
+     * @return
+     */
+    public List<SellAfterItem> listSellAfterItem(Integer page, Integer pageSize, String orderColumn, String orderType) {
+        PageHelper.startPage(page, pageSize);
+        return adminSellMapper.listSellAfterItems(orderColumn, orderType);
+    }
+
+    public void changeSellAfterState(Integer sellId, int state) {
+        adminSellMapper.changeSellAfterState(sellId, state);
     }
 }

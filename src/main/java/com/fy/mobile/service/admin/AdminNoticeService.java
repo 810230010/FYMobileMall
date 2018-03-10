@@ -83,4 +83,12 @@ public class AdminNoticeService {
     public void deleteNotice(Integer noticeId) {
         adminNoticeMapper.deleteNoticeById(noticeId);
     }
+
+    /**
+     * 获取最新公告
+     * @return
+     */
+    public String getLatestNotice() {
+        return adminNoticeMapper.getLatestNotice();
+    }
 }

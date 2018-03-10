@@ -197,4 +197,18 @@
 <div style="height:100px; background-color: black;color: white" class="text-center";>
     <h4 style="height:100px;line-height: 100px">2006-2090 飞扬版权所有@copyright</h4>
 </div>
+<script>
+    $(function(){
+        $.ajax({
+            url: "/getNotice",
+            success:function (result) {
+                swal("公告！", result.data)
+            },
+            error: function (result) {
+                alert("获取公告失败");
+            }
+        })
+
+    })
+</script>
 </@defaultLayout.layout>

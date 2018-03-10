@@ -1,6 +1,7 @@
 package com.fy.mobile.controller.admin.sell;
 
 import com.fy.mobile.common.PageResult;
+import com.fy.mobile.entity.SellAfterItem;
 import com.fy.mobile.entity.common.RestResult;
 import com.fy.mobile.entity.user.SellItemDetail;
 import com.fy.mobile.entity.user.UserDTO;
@@ -27,6 +28,8 @@ public class AdminSellController {
     private AdminSellService adminSellService;
     @Autowired
     private SellMapper sellMapper;
+    @Autowired
+    private SellService sellService;
 
     /**
      * 获取所有未审核闲置
@@ -122,4 +125,57 @@ public class AdminSellController {
         return new PageResult<SellItemDetail>(list, draw);
     }
 
+    /**
+     * 售后页面
+     * @return
+     */
+    @RequestMapping("/page/dealSellAfter")
+    public String viewToDealSellAfter(){
+        return "/admin/sell/sell-after";
+    }
+
+    /**
+     * 获取所有售后
+     * @param draw
+     * @param orderColumn
+     * @param orderType
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/listSellAfterItems")
+    @ResponseBody
+    public Object listSellAfterItems(@RequestParam("draw") int draw,
+                                       @RequestParam(value = "orderColumn", required = false) String orderColumn,
+                                       @RequestParam(value = "orderType", required = false) String orderType,
+                                       @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                       @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize){
+        orderColumn = StringUtils.camelToUnderline(orderColumn);
+        List<SellAfterItem> list = adminSellService.listSellAfterItem(page, pageSize, orderColumn, orderType);
+        return new PageResult<SellAfterItem>(list, draw);
+    }
+
+    /**
+     * 售后详情
+     * @return
+     */
+    @RequestMapping("/page/sellAfterDetail")
+    public String viewToSellAfterDetail(Integer sellId,  Model model){
+        SellItemDetail sellItemDetail = sellService.getSellItemDetail(sellId);
+        model.addAttribute("sellDetail", sellItemDetail);
+        return "/admin/sell/sell-after-detail";
+    }
+
+    /**
+     * 更改售后状态
+     * @param sellId
+     * @return
+     */
+    @RequestMapping("/updateSellAfterState")
+    @ResponseBody
+    public Object updateSellAfterState(Integer sellId){
+        RestResult result = new RestResult();
+        adminSellService.changeSellAfterState(sellId, 1);
+        return result.ok();
+    }
 }

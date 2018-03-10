@@ -19,6 +19,7 @@
         comment_no commentNo,
         publish_time publishTime
         from fy_need_publish
+        where state = 1
         ORDER BY publish_time
         limit 8;
     </select>

@@ -48,7 +48,7 @@
         var username = $("#username").val();
         var password = $("#password").val();
         $.ajax({
-            url: "/admin/checkLogin",
+            url: "/admin/login/checkLogin",
             data: {
                 username: username,
                 password: password

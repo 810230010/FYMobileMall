@@ -34,5 +34,6 @@ public class WebUtil {
     public static void storeLoginedUser(HttpServletRequest request, UserLoginDTO loginDTO){
         HttpSession session = request.getSession();
         session.setAttribute("loginedUser", loginDTO);
+        session.setMaxInactiveInterval(60 * 60);
     }
 }

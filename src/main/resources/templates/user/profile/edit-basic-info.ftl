@@ -19,12 +19,12 @@
             <div class="form-group">
                 <label for="title" class="col-md-2 control-label text-center">手机号码</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="phone" value="${analysis["tel"]}">
+                    <input type="text" class="form-control" id="phone" value="${analysis["tel"]}" readonly>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="title" class="col-md-2 control-label text-center">密码</label>
+                <label for="title" class="col-md-2 control-label text-center">原密码</label>
                 <div class="col-md-10">
                     <input type="text" class="form-control" id="oldPass">
                 </div>

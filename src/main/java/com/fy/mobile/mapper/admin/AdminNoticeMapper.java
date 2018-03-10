@@ -42,4 +42,10 @@ public interface AdminNoticeMapper {
      * @param noticeId
      */
     void deleteNoticeById(Integer noticeId);
+
+    /**
+     * 最新公告
+     * @return
+     */
+    String getLatestNotice();
 }

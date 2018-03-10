@@ -10,9 +10,9 @@
         update fy_user
         <set>
             <if test="tel != null and tel != ''">
-                tel = #{tel}
+                tel = #{tel},
             </if>
-            <if test="password != null and password != ''">
+            <if test="newPassword != null and newPassword != ''">
                 password = #{newPassword}
             </if>
         </set>
