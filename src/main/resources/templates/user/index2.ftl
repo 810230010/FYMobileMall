@@ -107,7 +107,7 @@
                                 <div class="thumbnail" style="padding-left: 0; padding-right: 0">
                                     <div style="padding-left: 10;">
                                         <img src="${sellItem.image}"
-                                             alt="通用的占位符缩略图" style="height: 140px">
+                                             alt="通用的占位符缩略图" style="height: 140px;width:100%">
                                     </div>
 
                                     <div class="caption text-center" style="position:relative;height:60px">

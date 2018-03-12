@@ -68,11 +68,11 @@
     </div>
     <div class="order-summary">
         <div class="col-md-3 pull-right" style="border:1px solid #f40;height:220px">
-            <p>实付款: ¥<span style="color:#f40;font-size:24px" id="goodsPrice">1,000</span></p>
-            <p>寄送至：<b id="goodsAddress">浙江省杭州市余杭区</b></p>
-            <p>收货人： <b  id="goodsTaker">江建平</b></p>
-            <p>联系电话： <b>17858936109</b></p>
-            <p>付款方式：<b id="payType">在线付款</b></p>
+            <p>实付款: ¥<span style="color:#f40;font-size:24px" id="goodsPrice"></span></p>
+            <p>寄送至：<b id="goodsAddress"></b></p>
+            <p>收货人： <b id="goodsTaker"></b></p>
+            <p>联系电话： <b id="orderTel"></b></p>
+            <p>付款方式：<b id="payType"></b></p>
             <button id="submitBtn" class="btn btn-info btn-block">提交订单</button>
         </div>
     </div>
@@ -125,12 +125,15 @@
 </div>
 <script>
     $(function () {
-
-        $("#goodsAddress").html("${addressList[0].addressName}");
-        $("#goodsTaker").html("${addressList[0].goodsTaker}");
-        $("#goodsTel").html("${addressList[0].tel}");
-        $("#goodsPrice").html("${sellItem.sellPrice}");
-        $("#payType").html("货到付款");
+       var size =  '${addressList?size}';
+       alert(size)
+        <#if (addressList?size>0)>
+            $("#goodsAddress").html("${addressList[0].addressName}");
+            $("#goodsTaker").html("${addressList[0].goodsTaker}");
+            $("#orderTel").html("${addressList[0].tel}");
+            $("#goodsPrice").html("${sellItem.sellPrice}");
+            $("#payType").html("货到付款");
+        </#if>
     })
 $(".address-item").click(function () {
 
@@ -140,7 +143,7 @@ $(".address-item").click(function () {
     $(this).siblings().children('.mark').css('visibility','hidden');
 
     $("#goodsAddress").html($(this).attr('address'));
-    $("#goodsTel").html($(this).attr('tel'));
+    $("#orderTel").html($(this).attr('tel'));
     $("#goodsTaker").html($(this).attr('accepter'));
 });
 $("#addAddress").click(function () {

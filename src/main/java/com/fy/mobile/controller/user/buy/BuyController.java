@@ -41,7 +41,7 @@ public class BuyController {
      */
     public RestResult getPublishedNeedDetail(@Param("needId") Integer needId, Model model){
         RestResult result = new RestResult();
-
+        buyService.getBuyNeedDetail(needId);
         return result.ok();
     }
 
